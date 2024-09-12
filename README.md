@@ -2,7 +2,7 @@
 
 Courses platform mainly focused on high quality software development courses
 
-## Contribution
+## Project setup
 
 ### Prerequisites
 
