@@ -1,3 +1,24 @@
 # Magic Academy
 
 Courses platform mainly focused on high quality software development courses
+
+## Contribution
+
+### Prerequisites
+
+#### Package Manager
+
+[pnpm](https://pnpm.io/es/installation) is **_faster_** than npm or yarn.
+
+##### Installation
+
+```bash
+npm i -g pnpm
+```
+
+##### pnpm vs npm
+
+Check out why pnpm is faster! (any video bellow):
+
+- [English video](https://www.youtube.com/watch?v=d1E31WPR70g) from [CoderOne](https://www.youtube.com/@CoderOne) - YouTube
+- [Spanish video](https://www.youtube.com/watch?v=MZ6JxWWCA5M) from [Fazt Code](https://www.youtube.com/@FaztCode) - YouTube
