@@ -34,3 +34,11 @@ Check out why pnpm is faster! (any video bellow):
    ```bash
    pnpm dev
    ```
+
+## Contributing
+### Adding shadcn/ui components
+Use the following command to use **pnpm** instead of npm:
+
+```bash
+pnpx shadcn@latest add <component-name>
+```
