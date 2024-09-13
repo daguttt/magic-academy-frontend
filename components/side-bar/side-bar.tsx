@@ -1,67 +1,60 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Head from 'next/head';
+import React, { useState } from 'react';
 import SideBarButton from './side-bar-button';
 import { House, MapPin, Album, Search, User } from 'lucide-react';
+import IconWithTooltip from './icon-tooltip';
 
 export default function SideBar() {
   const [activeIcon, setActiveIcon] = useState<number | null>(null);
   const [openBar, setOpenBar] = useState(false);
 
   const handleMenuToggle = () => {
-    setOpenBar(!openBar);
-    console.log('Menu toggled:', openBar);
+    setOpenBar(prevOpenBar => !prevOpenBar);
   };
 
   const handleActiveIcon = (index: number) => {
     setActiveIcon(index);
-    console.log("active icon " + index);
   };
+
+  const classIcons = `${openBar ? 'w-0' : 'w-6'} transition-all duration-300`;
+
+  const icons = [
+    { icon: <House className={classIcons} />, tooltip: 'Home' },
+    { icon: <MapPin className={classIcons}  />, tooltip: 'Map' },
+    { icon: <Album className={classIcons}  />, tooltip: 'Albums' },
+    { icon: <Search className={classIcons}  />, tooltip: 'Search' },
+    { icon: <User className={classIcons}  />, tooltip: 'Profile' }
+  ];
 
   return (
     <>
-      <Head>
-        <title>Home</title>
-        <meta name="description" content="Home page" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+        <div className="p-2 bg-gray-800 border-red-600 h-1/5">
+        <SideBarButton openBar={openBar} onToggle=      {handleMenuToggle} />
+        </div>
 
-      <header>
-        <SideBarButton openBar={openBar} onToggle={handleMenuToggle} />
-      </header>
-
-      <section
+      <aside
         id="navBar"
-        className={`fixed top-0 left-0 h-full transition-all duration-300 ${openBar ? 'w-64' : 'w-16'} bg-gray-800 text-white`}
+        className={`float-left h-screen transition-all duration-300 ${openBar ? 'w-0' : 'w-16'} bg-gray-800 text-white`}
       >
         <div className="navigation">
-          <div id="map">
-            <div className="menuToggle" onClick={handleMenuToggle}>
-              {/* Placeholder for the menu icon, you can customize it if needed */}
-            </div>
-          </div>
-
-          <ul>
-            {['Home', 'Map', 'Albums', 'Search', 'Profile'].map((text, index) => (
+          <ul className="list-none p-0 m-0">
+            {icons.map((item, index) => (
               <li
                 key={index}
-                className={`flex items-center p-3 rounded-lg cursor-pointer ${activeIcon === index ? 'active' : ''}`}
+                className="relative flex items-center justify-center p-3 rounded-lg cursor-pointer hover:bg-gray-500"
                 onClick={() => handleActiveIcon(index)}
               >
-                <span className="icon">
-                  {index === 0 && <House size={24} />}
-                  {index === 1 && <MapPin size={24} />}
-                  {index === 2 && <Album size={24} />}
-                  {index === 3 && <Search size={24} />}
-                  {index === 4 && <User size={24} />}
-                </span>
-                <span className={`text ${openBar ? 'block' : 'hidden'}`}>{text}</span>
+                <IconWithTooltip
+                  icon={item.icon}
+                  tooltipText={item.tooltip}
+                />
               </li>
             ))}
           </ul>
         </div>
-      </section>
+      </aside>
     </>
   );
 }
+
