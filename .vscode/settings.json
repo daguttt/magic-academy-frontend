@@ -1,0 +1,14 @@
+{
+  /*
+    Allow you to forget about formatting
+    every time you make changes.
+  */
+  "editor.formatOnSave": true,
+  // Enable ESlint to validate files.
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}
