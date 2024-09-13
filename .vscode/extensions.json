@@ -1,3 +1,8 @@
 {
-  "recommendations": ["bruceyuhb.hsl-preview", "bradlc.vscode-tailwindcss"]
+  "recommendations": [
+    "bruceyuhb.hsl-preview",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint"
+  ]
 }
