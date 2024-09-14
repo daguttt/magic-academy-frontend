@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
 interface SideBarButtonProps {
@@ -7,10 +8,11 @@ interface SideBarButtonProps {
 
 export default function SideBarButton({ openBar, onToggle }: SideBarButtonProps) {
   return (
-    <div className={`relative flex flex-col items-center justify-center  w-12 h-12 cursor-pointer ${openBar ? 'bg-gray-200' : 'bg-white'} transition-colors duration-300`}
+    <div className={`relative flex flex-col items-center justify-center  w-12 h-12 cursor-pointer transition-colors duration-300 rounded-lg ${openBar ? 'bg-gray-200' : 'bg-white'}`}
       onClick={onToggle}>
         <div
-          className={`w-8 h-0.5 bg-gray-800 transition-transform duration-300 ${openBar ? 'rotate-45 translate-y-1' : ''} m-1`}/>
+          // className={`w-8 h-0.5 bg-gray-800 transition-transform duration-300 ${openBar ? 'rotate-45 translate-y-1' : ''} `}/>
+          className={cn('w-8 h-0.5 bg-gray-800 transition-transform duration-300 m-1', openBar && 'rotate-45 translate-y-1')}/>
 
         <div
           className={`w-8 h-0.5 bg-gray-800 transition-all duration-300 ${openBar ? 'opacity-0 hidden' : 'opacity-100 block'}m-1`}/>
