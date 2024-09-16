@@ -3,6 +3,7 @@
     "bruceyuhb.hsl-preview",
     "bradlc.vscode-tailwindcss",
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "mylesmurphy.prettify-ts"
   ]
 }
