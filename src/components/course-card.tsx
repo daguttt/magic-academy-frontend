@@ -4,8 +4,8 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+} from '~/components/ui/card';
+import { cn } from '~/lib/utils';
 
 interface CourseCardProps {
   className?: string;

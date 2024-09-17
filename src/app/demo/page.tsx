@@ -1,4 +1,4 @@
-import { CourseCard } from '@/components/course-card';
+import { CourseCard } from '~/components/course-card';
 
 export default function Demo() {
   return (
