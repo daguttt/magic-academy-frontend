@@ -1,13 +1,9 @@
-import LoginForm from './components/login-form';
+import { LoginFormContainer } from './components/login-form-container';
 
-type LoginPageProps = {
-  searchParams: Record<string, string>;
-};
-
-export default function LoginPage({}: LoginPageProps) {
+export default function LoginPage() {
   return (
     <main className="container mx-auto flex min-h-[100svh] items-center justify-center px-4">
-      <LoginForm />
+      <LoginFormContainer />
     </main>
   );
 }
