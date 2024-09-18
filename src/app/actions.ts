@@ -2,7 +2,7 @@
 
 import { login, type LoginDto } from '~/services/auth/login';
 import { cookies } from 'next/headers';
-import { ProblemDetailsResponseDto } from '~/lib/common/types';
+import { ProblemDetailsResponseDto } from '~/lib/types';
 
 type ActionResultDto<TData = unknown> =
   | {
