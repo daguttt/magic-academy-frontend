@@ -8,16 +8,14 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from '@/lib/utils';
+} from "../ui/tooltip";
 
-export default function SideBar() {
+interface SideBarProps {
+  openBar: boolean;
+}
+
+export default function SideBar({ openBar }: SideBarProps) {
   const [activeIcon, setActiveIcon] = useState<number | null>(null);
-  const [openBar, setOpenBar] = useState(false);
-
-  const handleMenuToggle = () => {
-    setOpenBar(prevOpenBar => !prevOpenBar);
-  };
 
   const handleActiveIcon = (index: number) => {
     setActiveIcon(index);
@@ -35,16 +33,12 @@ export default function SideBar() {
 
   return (
     <>
-      <div className="p-2 bg-gray-900 border-red-600">
-        <SideBarButton openBar={openBar} onToggle={handleMenuToggle} />
-      </div>
-
       <aside
         id="navBar"
-        className={`float-left h-screen transition-all duration-300 ${openBar ? 'w-0' : 'w-16'} bg-gray-900 text-white`}
-      >
+        className={`fixed top-0 h-screen transition-all duration-300 bg-gray-900 text-white ${openBar ? 'w-0' : 'w-16'}`}>
+
         <div className="navigation">
-          <ul className="list-none">
+          <ul className="list-none mt-20">
             {icons.map((item, index) => (
               <li
                 key={item.tooltip}
