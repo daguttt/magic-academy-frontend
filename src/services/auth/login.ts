@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
-import { fetchApi } from '~/lib/common/fetch-api';
+import { fetchApi } from '~/lib/fetch-api';
+import { transformServiceSuccessResponseData } from '~/lib/utils';
 
+// Response Schema
 const loginResponseSchema = z.object({
   access_token: z.string(),
 });
@@ -13,8 +15,9 @@ export interface LoginDto {
   password: string;
 }
 
+// Service
 export async function login(loginDto: LoginDto) {
-  return await fetchApi<LoginResponseDto>({
+  const apiResponseDto = await fetchApi<LoginResponseDto>({
     path: '/auth/login',
     init: {
       method: 'POST',
@@ -25,4 +28,21 @@ export async function login(loginDto: LoginDto) {
     },
     responseSchema: loginResponseSchema,
   });
+
+  if (apiResponseDto.failureRes) return apiResponseDto;
+
+  return transformServiceSuccessResponseData(
+    apiResponseDto.successRes,
+    dataTransformerFn
+  );
+}
+
+// Transformer
+interface LoginData {
+  access_token: string;
+}
+function dataTransformerFn({ access_token }: LoginResponseDto): LoginData {
+  return {
+    access_token,
+  };
 }

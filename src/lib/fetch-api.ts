@@ -58,7 +58,9 @@ export async function fetchApi<TResponse = unknown>({
         failureRes: (await error.response.json()) as ProblemDetailsResponseDto,
       };
     }
-    // TODO Send error to a monitoring service
+    // TODO: Handle ZodError
+    // -*********************-
+    // TODO: Send error to a monitoring service
     console.error({ error });
     throw new Error('Error no contemplado en fetchApi()');
   }
