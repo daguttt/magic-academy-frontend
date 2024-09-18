@@ -17,7 +17,7 @@ export interface ProblemDetailsResponseDto {
   errors: FieldValidationError[];
 }
 
-interface ApiSuccessResponseDto<TData> {
+export interface ApiSuccessResponseDto<TData> {
   code: number;
   data: TData;
   message: string;
