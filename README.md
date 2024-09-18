@@ -35,7 +35,7 @@ Check out why pnpm is faster! (any video bellow):
    pnpm dev
    ```
 
-## Contributing
+## Developing
 ### Adding shadcn/ui components
 Use the following command to use **pnpm** instead of npm:
 
