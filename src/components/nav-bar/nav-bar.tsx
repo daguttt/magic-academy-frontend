@@ -13,7 +13,6 @@ import {
     DropdownMenuTrigger,
   } from "../../components/ui/dropdown-menu"
 import { Search } from 'lucide-react';
-import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
   
 
 interface NavBarProp{
