@@ -1,4 +1,4 @@
-import { ZodType } from 'zod';
+import { ZodError, type ZodIssue, ZodIssueCode, type ZodType } from 'zod';
 import { ApiResponseDto, HttpError, ProblemDetailsResponseDto } from './types';
 
 interface FetchApiProps<ResponseType = unknown> {
@@ -26,18 +26,16 @@ export async function fetchApi<TResponse = unknown>({
     const responseBody = await response.json();
 
     // Server response validation
-    let parsedData: TResponse;
-    if (process.env.NODE_ENV === 'development') {
-      parsedData = responseSchema.parse(responseBody.data) as TResponse;
-    } else {
-      parsedData = responseSchema.safeParse(responseBody.data) as TResponse;
-    }
+    validateServerResponseData({
+      data: responseBody.data,
+      schema: responseSchema,
+    });
 
     return {
       successRes: {
         code: responseBody.code,
         message: responseBody.message,
-        data: parsedData,
+        data: responseBody.data,
       },
       failureRes: null,
     };
@@ -48,6 +46,7 @@ export async function fetchApi<TResponse = unknown>({
         failureRes: {
           status: 500,
           title: 'No se pudo acceder al servidor',
+          detail: 'No se pudo acceder al servidor',
           errors: [],
         },
       };
@@ -58,10 +57,56 @@ export async function fetchApi<TResponse = unknown>({
         failureRes: (await error.response.json()) as ProblemDetailsResponseDto,
       };
     }
-    // TODO: Handle ZodError
-    // -*********************-
-    // TODO: Send error to a monitoring service
+    // Error thrown validating server response
+    if (error instanceof ZodError) {
+      handleZodErrorDev(error);
+    }
+
+    console.log('-*********************************************************-');
     console.error({ error });
+    console.log('-*********************************************************-');
     throw new Error('Error no contemplado en fetchApi()');
   }
+}
+
+function validateServerResponseData({
+  data,
+  schema,
+}: {
+  data: unknown;
+  schema: ZodType<unknown>;
+}) {
+  if (process.env.NODE_ENV === 'development') {
+    schema.parse(data);
+  } else {
+    const { success: isReponseDataValid, error } = schema.safeParse(data);
+    if (!isReponseDataValid) {
+      // TODO: Send error to a monitoring service
+      logValidationZodIssues(error.issues);
+    }
+  }
+}
+
+/**
+ * For development purposes.
+ * Describes which data paths didn't match the schema.
+ * Throws an error if the response data does not match the schema.
+ */
+function handleZodErrorDev(error: ZodError) {
+  logValidationZodIssues(error.issues);
+  throw new Error('Response data does not match the provided schema');
+}
+
+function logValidationZodIssues(issues: ZodIssue[]) {
+  console.error('\nError: Response data does not match the provided schema');
+  issues.forEach((issue) => {
+    if (issue.code === ZodIssueCode.invalid_type) {
+      console.error({
+        property: issue.path.join('.'),
+        message: `The expected path's type is '${issue.expected}', but received '${issue.received}'`,
+        zodMessage: issue.message,
+      });
+      console.log('-*********************-');
+    }
+  });
 }
