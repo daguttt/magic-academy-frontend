@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
+
 import { LoginFormContainer } from './components/login-form-container';
+
+export const metadata: Metadata = {
+  title: 'Ingreso',
+};
 
 export default function LoginPage() {
   return (
