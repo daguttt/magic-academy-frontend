@@ -39,10 +39,10 @@ export async function login(loginDto: LoginDto) {
 
 // Transformer
 interface LoginData {
-  access_token: string;
+  accessToken: string;
 }
 function dataTransformerFn({ access_token }: LoginResponseDto): LoginData {
   return {
-    access_token,
+    accessToken: access_token,
   };
 }
