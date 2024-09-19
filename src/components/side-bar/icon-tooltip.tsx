@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface IconWithTooltipProps {
   icon: React.ReactNode;
   tooltipText: string;

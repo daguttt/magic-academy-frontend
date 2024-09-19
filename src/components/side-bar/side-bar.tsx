@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { House, MapPin, Album, Search, User } from 'lucide-react';
-import SideBarButton from './side-bar-button';
 import {
   Tooltip,
   TooltipContent,
