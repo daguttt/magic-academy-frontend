@@ -4,7 +4,7 @@ import { ApiResponseDto, HttpError, ProblemDetailsResponseDto } from './types';
 interface FetchApiProps<ResponseType = unknown> {
   path: string;
   init?: RequestInit;
-  responseSchema: ZodType<ResponseType>;
+  responseSchema?: ZodType<ResponseType>;
 }
 
 export async function fetchApi<TResponse = unknown>({
@@ -26,11 +26,12 @@ export async function fetchApi<TResponse = unknown>({
     const responseBody = await response.json();
 
     // Server response validation
-    validateServerResponseData({
-      data: responseBody.data,
-      schema: responseSchema,
-    });
-
+    if (responseSchema) {
+      validateServerResponseData({
+        data: responseBody.data,
+        schema: responseSchema,
+      });
+    }
     return {
       successRes: {
         code: responseBody.code,
