@@ -4,6 +4,7 @@
     "bradlc.vscode-tailwindcss",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "mylesmurphy.prettify-ts"
+    "mylesmurphy.prettify-ts",
+    "yoavbls.pretty-ts-errors"
   ]
 }
