@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import NavBar from '../../components/nav-bar/nav-bar';
-import SideBar from '../../components/side-bar/side-bar';
-
+import SideAndNavBar from '~/components/nav-bar/side-and-nav-bar';
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [openBar, setOpenBar] = useState(false);
 
@@ -19,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </main>
             
             <aside className=''>
-              <NavBar openBar={openBar} onMenuToggle={handleMenuToggle} />
+              <SideAndNavBar openBar={openBar} onMenuToggle={handleMenuToggle} />
             </aside>
         </>
     );

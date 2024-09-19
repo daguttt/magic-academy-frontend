@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../ui/tooltip';
+} from '~/components/ui/tooltip';
 
 interface SideBarProps {
   openBar: boolean;
