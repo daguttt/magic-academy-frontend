@@ -7,13 +7,7 @@ import CourseSections from './components/CourseSections';
 import CourseForum from './components/CourseForum';
 import CourseComments from './components/CourseComments';
 
-interface CourseDetailProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function CourseDetail({ params }: CourseDetailProps) {
+export default function CourseDetail() {
   const [showSections, setShowSections] = useState(false);
   const [showForum, setShowForum] = useState(false);
 
