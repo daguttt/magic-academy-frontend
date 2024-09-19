@@ -24,7 +24,8 @@ export type LastSeenClassesResponseDto = z.infer<
 export async function getStudentLastSeenClasses(): Promise<
   ApiResponseDto<LastSeenClass[]>
 > {
-  const authToken = cookies().get('AUTH_TOKEN');
+  const authToken = cookies().get('AUTH_TOKEN')?.value;
+  console.log(authToken,"at");
 
   const apiResponseDto = await fetchApi<LastSeenClassesResponseDto>({
     path: '/users/user/classes/in-progress/latest',

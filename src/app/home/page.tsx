@@ -13,7 +13,6 @@ export default async function HomePage() {
   return (
     <main className="container mx-auto flex min-h-[100svh] items-center justify-center px-4">
       <h1>Bienvenido</h1>
-      <pre>{JSON.stringify(successRes, null, 2)}</pre>
     </main>
   );
 }
