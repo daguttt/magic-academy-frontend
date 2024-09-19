@@ -1,75 +1,71 @@
 import Image from 'next/image';
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Input } from "../ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Input } from '../ui/input';
 import SideBarButton from '../side-bar/side-bar-button';
 import SideBar from '../side-bar/side-bar';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "../../components/ui/dropdown-menu"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../../components/ui/dropdown-menu';
 import { Search } from 'lucide-react';
-  
 
-interface NavBarProp{
-    openBar: boolean;
-    onMenuToggle: () => void;
+interface NavBarProp {
+  openBar: boolean;
+  onMenuToggle: () => void;
 }
 
-export default function NavBar({openBar, onMenuToggle} : NavBarProp) {
+export default function NavBar({ openBar, onMenuToggle }: NavBarProp) {
+  return (
+    <>
+      <div>
+        <SideBar openBar={openBar} />
+      </div>
 
-    return (
-        <>
-            <div>
-                <SideBar openBar={openBar} />
-            </div>
+      <nav className="content fixed left-0 top-0 z-50 w-full bg-background border border-b-foreground">
+        <div className="flex h-16 items-center justify-between">
+          <div className="absolute left-0 border border-r-foreground p-1.5 pl-1.5">
+            <SideBarButton openBar={openBar} onToggle={onMenuToggle} />
+          </div>
 
-            <nav className="fixed top-0 left-0 w-full content bg-gray-900 z-50">
-                <div className="flex justify-between h-16 items-center">
+          <div className="pl-20">
+            <div className="h-8 w-52 bg-white" />
+            {/* <Image src="/logo.png" alt="Logo" width={100} height={100} /> */}
+          </div>
 
-                    <div className="absolute left-0 p-1.5  border border-b-gray-700 border-r-gray-700">
-                        <SideBarButton openBar={openBar} onToggle={onMenuToggle} />
-                    </div>
+          <div className="relative w-80">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              className="pl-10"
+              type="search"
+              placeholder="¿Qué quieres buscar?"
+            />
+          </div>
 
-                    <div className="pl-20">
-                        <div className='w-52 h-8 bg-white'/>
-                        {/* <Image src="/logo.png" alt="Logo" width={100} height={100} /> */}
-                    </div>
-
-                    <div className="relative w-80">
-                    <Search className="absolute left-1.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input
-                            className="p-3 pl-6 bg-gray-900 text-white rounded-sm border border-gray-500 shadow-lg focus:ring-2 focus:ring-blue-500 transition-all duration-300 ease-in-out"
-                            type="search"
-                            placeholder="¿Qué quieres buscar?"
-                        />
-                    </div>
-        
-                    <div className="flex justify-end items-center pr-20 relative">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Avatar className='overflow-hidden rounded-full'>
-                                <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>Imagen</AvatarFallback>
-                            </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent >
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>LogOut</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    </div>
-                </div>
-            </nav>
-            
-        </>
-    );
+          <div className="relative flex items-center justify-end pr-20">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="overflow-hidden rounded-full">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>Imagen</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>LogOut</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
 }

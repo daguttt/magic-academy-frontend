@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { House, MapPin, Album, Search, User } from 'lucide-react';
@@ -8,7 +8,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from '../ui/tooltip';
 
 interface SideBarProps {
   openBar: boolean;
@@ -28,32 +28,33 @@ export default function SideBar({ openBar }: SideBarProps) {
     { icon: <MapPin className={classIcons} />, tooltip: 'Map' },
     { icon: <Album className={classIcons} />, tooltip: 'Albums' },
     { icon: <Search className={classIcons} />, tooltip: 'Search' },
-    { icon: <User className={classIcons} />, tooltip: 'Profile' }
+    { icon: <User className={classIcons} />, tooltip: 'Profile' },
   ];
 
   return (
     <>
       <aside
         id="navBar"
-        className={`fixed top-0 h-screen transition-all duration-300 bg-gray-900 text-white ${openBar ? 'w-0' : 'w-16'}`}>
-
+        className={`fixed top-0 h-screen bg-background transition-all duration-300 ${openBar ? 'w-0' : 'w-16'}`}
+      >
         <div className="navigation">
-          <ul className="list-none mt-20">
+          <ul className="mt-20 list-none">
             {icons.map((item, index) => (
               <li
                 key={item.tooltip}
-                className="relative flex items-center justify-center rounded-lg cursor-pointer hover:bg-gray-500"
+                className="relative flex cursor-pointer items-center justify-center rounded-lg hover:bg-foreground/30"
                 onClick={() => handleActiveIcon(index)}
               >
                 <TooltipProvider delayDuration={90} skipDelayDuration={200}>
                   <Tooltip>
-                    <TooltipTrigger className='p-3.5 pr-4 pl-4'>
-                      <span className={`transition-colors duration-50 ${activeIcon === index ? 'text-blue-400' : 'text-gray-100'}`}>
+                    <TooltipTrigger className="p-3.5 pl-4 pr-4">
+                      <span
+                        className={`duration-50 transition-colors ${activeIcon === index ? 'text-blue-400' : 'text-foreground'}`}
+                      >
                         {item.icon}
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent side="right"
-                     className='translate-x-10'>
+                    <TooltipContent side="right" className="translate-x-10">
                       {item.tooltip}
                     </TooltipContent>
                   </Tooltip>

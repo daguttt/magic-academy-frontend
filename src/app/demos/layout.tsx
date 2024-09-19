@@ -13,13 +13,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     return (
         <>
-            <header className='pt-20'>
-              <NavBar openBar={openBar} onMenuToggle={handleMenuToggle} />
-            </header>
 
-            <main className={`transition-all duration-300 ${openBar ? 'ml-0' : 'ml-16'}`}>
+            <main className={`pt-20 transition-all duration-300 ${openBar ? 'ml-0' : 'ml-16'}`}>
                 {children}
             </main>
+            
+            <aside className=''>
+              <NavBar openBar={openBar} onMenuToggle={handleMenuToggle} />
+            </aside>
         </>
     );
 }
