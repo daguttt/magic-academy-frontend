@@ -28,7 +28,7 @@ export async function loginAction(
   const cookiesStore = cookies();
   cookiesStore.set({
     name: 'AUTH_TOKEN',
-    value: loginResult.successRes.data.access_token,
+    value: loginResult.successRes.data.accessToken,
     secure: process.env.NODE_ENV === 'production',
     httpOnly: process.env.NODE_ENV === 'production',
     maxAge: parseInt(process.env.SESSION_COOKIE_MAX_AGE ?? '3600'),
