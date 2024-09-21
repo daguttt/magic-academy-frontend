@@ -5,10 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { registerAction } from '~/app/auth/_actions/register-actions';
-
 import {
   Form,
   FormControl,
@@ -21,7 +19,7 @@ import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { RegisterDto } from '~/services/auth/register';
-import { TopicsList } from './topics';
+import { TopicsList } from '~/components/topics';
 
 // Esquema de validación para el registro de usuario
 const registerFormSchema = z.object({
@@ -48,6 +46,18 @@ const registerFormSchema = z.object({
 });
 
 export function RegisterForm() {
+  const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
+
+  // Obtener el token desde la URL
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const search = window.location.search;
+      const tokenParam = search ? search.substring(1) : null;
+      setToken(tokenParam);
+    }
+  }, []);
+
   const [step, setStep] = useState(1);
 
   const returnedPropsUseForm = useForm<z.infer<typeof registerFormSchema>>({
@@ -61,13 +71,11 @@ export function RegisterForm() {
   });
   const { errors } = returnedPropsUseForm.formState;
 
-  const router = useRouter();
-
   const mutation = useMutation({
     mutationFn: (registerDto: RegisterDto) => registerAction(registerDto),
     onSuccess: (actionResult) => {
-      console.log('Registro exitoso:', actionResult);
       if (!actionResult.success) {
+        toast.error('Registro exit');
         toast.error(actionResult.error.detail);
         return;
       }
@@ -83,7 +91,13 @@ export function RegisterForm() {
   });
 
   const handleRegister = async (values: z.infer<typeof registerFormSchema>) => {
-    console.log('Registro de usuario con los siguientes datos:', values);
+    if (token) {
+      const registerDto: RegisterDto = {
+        ...values,
+        token: token || '',
+      };
+      return mutation.mutate(registerDto);
+    }
     return mutation.mutate(values);
   };
 
@@ -92,8 +106,8 @@ export function RegisterForm() {
       'name',
       'email',
       'password',
-    ]); // Espera la validación
-    console.log('Errores:', returnedPropsUseForm.formState.errors);
+    ]);
+    // console.log('Errores:', returnedPropsUseForm.formState.errors);
     if (isValid) {
       setStep((prev) => prev + 1); // Solo avanza si es válido
     }
