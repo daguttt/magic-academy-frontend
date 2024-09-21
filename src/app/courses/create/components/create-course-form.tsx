@@ -56,15 +56,26 @@ export function CreateCourseForm() {
   });
 
   const [selectedTopics, setSelectedTopics] = useState<number[]>([]);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
       return await createCourseAction(formData);
     },
-    onSettled: (data, error) => {
-      if (error) {
-        console.error('Error al crear el curso:', error);
-      }
+    onMutate: () => {
+      setLoading(true); // Muestra el mensaje de carga al iniciar la mutación
+    },
+    onSuccess: () => {
+      setSuccessMessage('Curso creado exitosamente!');
+      form.reset(); // Opcional: Resetea el formulario después de crear el curso
+    },
+    onSettled: () => {
+      setLoading(false); // Oculta el mensaje de carga cuando la mutación se completa
+    },
+    onError: (error) => {
+      console.error('Error al crear el curso:', error);
+      setLoading(false); // Asegúrate de ocultar el loader si hay un error
     },
   });
 
@@ -81,7 +92,6 @@ export function CreateCourseForm() {
     if (values.thumbnail) {
       formData.append('thumbnail', values.thumbnail);
     }
-    console.log(JSON.stringify(formData), 'este es el form formData');
     mutation.mutate(formData);
   };
 
@@ -196,6 +206,16 @@ export function CreateCourseForm() {
         <Button type="submit" className="w-full bg-blue-500 text-white">
           Crear
         </Button>
+
+        {/* Mensaje de carga */}
+        {loading && (
+          <div className="mt-4 text-blue-500">Creando curso...</div>
+        )}
+
+        {/* Mensaje de éxito */}
+        {successMessage && (
+          <div className="mt-4 text-green-500">{successMessage}</div>
+        )}
       </form>
     </Form>
   );
