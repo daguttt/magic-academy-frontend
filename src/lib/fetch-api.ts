@@ -32,7 +32,6 @@ export async function fetchApi<TResponse = unknown>({
         schema: responseSchema,
       });
     }
-
     return {
       successRes: {
         code: responseBody.code,
