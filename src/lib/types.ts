@@ -34,6 +34,16 @@ export type ApiResponseDto<TData> =
       failureRes: ProblemDetailsResponseDto;
     };
 
+export type ActionResultDto<TData = unknown> =
+  | {
+      success: true;
+      data: TData;
+    }
+  | {
+      success: false;
+      error: ProblemDetailsResponseDto;
+    };
+
 export enum ROLES {
   STUDENT = 1,
   INSTRUCTOR = 2,
