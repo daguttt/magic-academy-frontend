@@ -8,35 +8,7 @@ import {
   SectionClassItemsContainer,
   SectionClassItem,
 } from './section-class-items';
-
-// const courseSectionsData = [
-//   {
-//     id: 1,
-//     name: 'Css grid',
-//     course: {
-//       id: 1,
-//       name: 'Aprende css desde cero',
-//       description: 'Esto es una descripción de CSS',
-//       thumbnail_url: 'Oelo',
-//       slug: 'Oelo',
-//       published_at: '2024-09-15T04:19:44.000Z',
-//       users: [],
-//     },
-//   },
-//   {
-//     id: 2,
-//     name: 'Css flex',
-//     course: {
-//       id: 1,
-//       name: 'Aprende css desde cero',
-//       description: 'Esto es una descripción de CSS',
-//       thumbnail_url: 'Oelo',
-//       slug: 'Oelo',
-//       published_at: '2024-09-15T04:19:44.000Z',
-//       users: [],
-//     },
-//   },
-// ];
+import { getSectionClasses } from '~/services/classes/get-section-classes';
 
 interface CourseSectionsProps {
   courseId: number;
@@ -59,7 +31,7 @@ export default async function CourseSections({
           <Suspense
             fallback={<p>Cargando clasess de {section.sectionName}...</p>}
           >
-            <SectionClasses />
+            <SectionClasses sectionId={section.sectionId} />{' '}
           </Suspense>
         </CourseSectionItem>
       ))}
@@ -67,7 +39,11 @@ export default async function CourseSections({
   );
 }
 
-async function SectionClasses() {
+interface SectionClassesProps {
+  sectionId: number;
+}
+
+async function SectionClasses({ sectionId }: SectionClassesProps) {
   const { successRes, failureRes } = await getSectionClasses(sectionId);
 
   if (failureRes) return <p>Error: {failureRes.detail}</p>;
@@ -76,8 +52,12 @@ async function SectionClasses() {
 
   return (
     <SectionClassItemsContainer>
-      {classes.map((classItem) => (
-        <SectionClassItem key={classItem.id} classItem={classItem} />
+      {classes.map((classItem, index) => (
+        <SectionClassItem
+          key={classItem.classId}
+          classItem={classItem}
+          classNumber={index}
+        />
       ))}
     </SectionClassItemsContainer>
   );

@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/ui/accordion';
+import { SectionClassesData } from '~/services/classes/get-section-classes';
 
 interface SectionClassItemsContainerProps {
   children: React.ReactNode[];
@@ -20,24 +21,28 @@ export function SectionClassItemsContainer({
   );
 }
 
-// TODO: Replace this by the service interface
-interface SectionClassData {
-  id: number;
-  classNumber: number;
-  name: string;
-}
-
-// 'use client'
 interface SectionClassItemProps {
-  sectionClass: SectionClassData;
+  classItem: SectionClassesData;
+  classNumber: number;
 }
-export function SectionClassItem({ sectionClass }: SectionClassItemProps) {
+export function SectionClassItem({
+  classItem: { classId, classTitle, classContent, classUrl },
+  classNumber,
+}: SectionClassItemProps) {
   return (
-    <AccordionItem key={sectionClass.id} value={`item-${sectionClass.id}`}>
+    <AccordionItem value={`item-${classId}`}>
       <AccordionTrigger>
-        Class {sectionClass.classNumber}: {sectionClass.name}
+        Class {classNumber}: {classTitle}
       </AccordionTrigger>
-      <AccordionContent></AccordionContent>
+      <AccordionContent className="p-8">
+        <div className="flex gap-4">
+          <p>Contiene:</p>
+          <div className="flex gap-2">
+            {classUrl ? <span>Video</span> : null}
+            {classContent ? <span>Articulo</span> : null}
+          </div>
+        </div>
+      </AccordionContent>
     </AccordionItem>
   );
 }
