@@ -9,21 +9,32 @@ import {
 import { CourseSectionData } from '~/services/section/get-course-sections';
 
 interface CourseSectionItemsProps {
-  sections: CourseSectionData[];
+  children: React.ReactNode[];
 }
 
-export function CourseSectionItems({ sections }: CourseSectionItemsProps) {
+export function CourseSectionItemsContainer({
+  children,
+}: CourseSectionItemsProps) {
   return (
     <Accordion type="single" collapsible className="w-full">
-      {sections.map((section) => (
-        <AccordionItem
-          key={section.sectionId}
-          value={`item-${section.sectionId}`}
-        >
-          <AccordionTrigger>{section.sectionName}</AccordionTrigger>
-          <AccordionContent>Here goes the classes</AccordionContent>
-        </AccordionItem>
-      ))}
+      {children}
     </Accordion>
+  );
+}
+
+interface CourseSectionItemProps {
+  children: React.ReactNode;
+  section: CourseSectionData;
+}
+
+export function CourseSectionItem({
+  section,
+  children,
+}: CourseSectionItemProps) {
+  return (
+    <AccordionItem key={section.sectionId} value={`item-${section.sectionId}`}>
+      <AccordionTrigger>{section.sectionName}</AccordionTrigger>
+      <AccordionContent>{children}</AccordionContent>
+    </AccordionItem>
   );
 }
