@@ -21,6 +21,17 @@ const coursesSchema = z.array(courseSchema);
 export type courseResponseDto = z.infer<typeof courseSchema>;
 export type coursesResponseDto = z.infer<typeof coursesSchema>;
 
+// Interface for the course object
+export interface Icourse {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail_url: string | null;
+  slug: string;
+  published_at: string;
+  instructor_name: string; // Added instructor_name
+}
+
 // Service to fetch all classes (courses)
 export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
   // Fetch data from the API and expect an array of courses
@@ -40,17 +51,6 @@ export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
     apiResponseDto.successRes,
     dataTransformerFn
   );
-}
-
-// Interface for the course object
-export interface Icourse {
-  id: number;
-  name: string;
-  description: string;
-  thumbnail_url: string | null;
-  slug: string;
-  published_at: string;
-  instructor_name: string; // Added instructor_name
 }
 
 // Transformer function to map API response to internal format

@@ -2,11 +2,15 @@
 'use client';
 
 import Image from 'next/image';
-import { ICourseData } from './Course';
 import { useEffect, useState } from 'react';
+import { ICourseData } from './Course';
 
 export default function CourseHeader({ courseData }: ICourseData) {
-  const { name, description, thumbnail_url } = courseData;
+  const {
+    name,
+    description,
+    // thumbnail_url
+  } = courseData;
 
   const [stars, setStars] = useState<string>('');
 
