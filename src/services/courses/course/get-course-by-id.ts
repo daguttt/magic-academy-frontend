@@ -1,26 +1,22 @@
-import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 import { fetchApi } from '~/lib/fetch-api';
 import { ApiResponseDto } from '~/lib/types';
 import { transformServiceSuccessResponseData } from '~/lib/utils';
-import { courseSchema, Icourse } from '../courses';
-
+import { courseSchema, Icourse } from '../get-courses';
 
 export type courseResponseDto = z.infer<typeof courseSchema>;
 
 // Service to fetch a single course by courseId
-export async function getCourse(courseId: number): Promise<ApiResponseDto<Icourse>> {
-  const authToken = cookies().get('AUTH_TOKEN')?.value;
-
+export async function getCourse(
+  courseId: number
+): Promise<ApiResponseDto<Icourse>> {
   // Fetch data from the API, expecting a single course
   const apiResponseDto = await fetchApi<courseResponseDto>({
+    isAuth: true,
     path: `/courses/${courseId}`, // Changed to fetch one course by ID
     init: {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
     },
     responseSchema: courseSchema, // Expect a single course in response
   });

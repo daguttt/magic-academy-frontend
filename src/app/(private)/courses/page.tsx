@@ -1,5 +1,5 @@
 // Server Component - se encarga del fetching
-import { getAllCourses } from '~/services/courses/courses';
+import { getAllCourses } from '~/services/courses/get-courses';
 import CourseGridClient from './components/course-grid-component';
 import SingleCourseHeader from './components/courses-header';
 export default async function CoursePage() {
@@ -7,7 +7,7 @@ export default async function CoursePage() {
 
   return (
     <div>
-       <SingleCourseHeader/>
+      <SingleCourseHeader />
       <CourseGridClient courses={apiResponse.successRes?.data || []} />
     </div>
   );

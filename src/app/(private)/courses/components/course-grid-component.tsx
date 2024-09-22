@@ -1,5 +1,5 @@
 'use client';
-import { Icourse } from '~/services/courses/courses';
+import { Icourse } from '~/services/courses/get-courses';
 import { CourseCard } from '~/components/course-card';
 
 interface CourseGridClientProps {

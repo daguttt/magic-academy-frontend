@@ -7,7 +7,7 @@ export default function CourseComments() {
       <button className="text-blue-500">Ocultar comentarios</button>
       <div className="mt-2">
         <textarea
-          className="w-full border p-2 rounded"
+          className="w-full rounded border p-2"
           rows={4}
           placeholder="Escribe un comentario..."
         ></textarea>
