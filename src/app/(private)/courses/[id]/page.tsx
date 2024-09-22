@@ -18,7 +18,7 @@ export default function CourseDetail() {
 
       {/* Button to continue the course */}
       <div className="my-4">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded-lg">
+        <button className="rounded-lg bg-blue-500 px-4 py-2 text-white">
           Continue Course
         </button>
       </div>
@@ -27,7 +27,7 @@ export default function CourseDetail() {
       <div className="my-8 space-x-4">
         {/* Sections Button */}
         <button
-          className="bg-gray-700 text-white py-2 px-4 rounded-lg"
+          className="rounded-lg bg-gray-700 px-4 py-2 text-white"
           onClick={() => setShowSections(!showSections)}
         >
           {showSections ? 'Hide Sections' : 'Show Sections'}
@@ -35,7 +35,7 @@ export default function CourseDetail() {
 
         {/* Forum Button */}
         <button
-          className="bg-gray-700 text-white py-2 px-4 rounded-lg"
+          className="rounded-lg bg-gray-700 px-4 py-2 text-white"
           onClick={() => setShowForum(!showForum)}
         >
           {showForum ? 'Hide Forum' : 'Show Forum'}

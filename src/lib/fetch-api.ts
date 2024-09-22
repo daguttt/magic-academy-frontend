@@ -1,17 +1,29 @@
 import { ZodError, type ZodIssue, ZodIssueCode, type ZodType } from 'zod';
 import { ApiResponseDto, HttpError, ProblemDetailsResponseDto } from './types';
+import { verifySession } from './session';
 
-interface FetchApiProps<ResponseType = unknown> {
+export interface FetchApiProps<ResponseType = unknown> {
+  isAuth?: boolean;
   path: string;
-  init?: RequestInit;
+  init: RequestInit;
   responseSchema?: ZodType<ResponseType>;
 }
 
+/**
+ * Fetches the backend API.
+ *
+ * The `isAuth` parameter determines if the request should be authenticated.
+ * By default is `false`. If it's `true`, it will add the `Authorization`
+ * header with the access token extracted from the session (cookies).
+ */
 export async function fetchApi<TResponse = unknown>({
+  isAuth = false,
   path,
   init,
   responseSchema,
 }: FetchApiProps): Promise<ApiResponseDto<TResponse>> {
+  if (isAuth) addAuthToRequestInit({ init });
+
   const url = `${process.env.API_URL}${path}`;
 
   try {
@@ -69,6 +81,15 @@ export async function fetchApi<TResponse = unknown>({
     console.log('-*********************************************************-');
     throw new Error('Error no contemplado en fetchApi()');
   }
+}
+
+function addAuthToRequestInit({ init }: { init: RequestInit }) {
+  const session = verifySession();
+  init.headers = {
+    ...init.headers,
+    Authorization: `Bearer ${session.accessToken}`,
+  };
+  return init;
 }
 
 function validateServerResponseData({

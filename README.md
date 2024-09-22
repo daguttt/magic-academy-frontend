@@ -23,6 +23,9 @@ Check out why pnpm is faster! (any video bellow):
 - [English video](https://www.youtube.com/watch?v=d1E31WPR70g) from [CoderOne](https://www.youtube.com/@CoderOne) - YouTube
 - [Spanish video](https://www.youtube.com/watch?v=MZ6JxWWCA5M) from [Fazt Code](https://www.youtube.com/@FaztCode) - YouTube
 
+#### Environment variables
+Copy the `.env.example` content and create the `.env` file in the root of the project folder structure
+
 ### Running the project
 
 1. Clone the repo.
