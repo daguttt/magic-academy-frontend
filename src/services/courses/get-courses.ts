@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 import { fetchApi } from '~/lib/fetch-api';
@@ -24,16 +23,12 @@ export type coursesResponseDto = z.infer<typeof coursesSchema>;
 
 // Service to fetch all classes (courses)
 export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
-  const authToken = cookies().get('AUTH_TOKEN')?.value;
-
   // Fetch data from the API and expect an array of courses
   const apiResponseDto = await fetchApi<coursesResponseDto>({
+    isAuth: true,
     path: '/courses',
     init: {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
     },
     responseSchema: coursesSchema, // Expect an array of courses
   });
@@ -52,7 +47,7 @@ export interface Icourse {
   id: number;
   name: string;
   description: string;
-  thumbnail_url: string | null; 
+  thumbnail_url: string | null;
   slug: string;
   published_at: string;
   instructor_name: string; // Added instructor_name
