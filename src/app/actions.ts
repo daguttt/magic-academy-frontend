@@ -1,8 +1,9 @@
 'use server';
 
 import { login, type LoginDto } from '~/services/auth/login';
-import { cookies } from 'next/headers';
 import { ProblemDetailsResponseDto } from '~/lib/types';
+import { createSession, deleteSession } from '~/lib/session';
+import { redirect } from 'next/navigation';
 
 type ActionResultDto<TData = unknown> =
   | {
@@ -25,17 +26,15 @@ export async function loginAction(
       error: loginResult.failureRes,
     };
 
-  const cookiesStore = cookies();
-  cookiesStore.set({
-    name: 'AUTH_TOKEN',
-    value: loginResult.successRes.data.accessToken,
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: process.env.NODE_ENV === 'production',
-    maxAge: parseInt(process.env.SESSION_COOKIE_MAX_AGE ?? '3600'),
-  });
+  createSession(loginResult.successRes.data.accessToken);
 
   return {
     success: true,
     data: loginResult.successRes.message,
   };
+}
+
+export async function logoutAction() {
+  deleteSession();
+  redirect('/auth/login');
 }
