@@ -14,10 +14,10 @@ import {
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
-import { TopicsListCourse } from './course-topics';
 import { useState } from 'react';
 import { createCourseAction } from '../../_actions/create-course-action';
 import { useMutation } from '@tanstack/react-query';
+import { TopicsList } from '~/components/topics';
 
 const getCurrentDate = () => {
   const today = new Date();
@@ -61,7 +61,10 @@ export function CreateCourseForm() {
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      return await createCourseAction(formData);
+      console.log(formData);
+      const action = await createCourseAction(formData);
+      console.log(action, '*****');
+      return action;
     },
     onMutate: () => {
       setLoading(true); // Muestra el mensaje de carga al iniciar la mutación
@@ -86,6 +89,8 @@ export function CreateCourseForm() {
     formData.append('description', values.description || '');
     formData.append('slug', values.slug);
     formData.append('published_at', values.published_at || '');
+
+    const topics = Array.isArray(selectedTopics) ? selectedTopics : [selectedTopics];
     selectedTopics.forEach((topic) => {
       formData.append('topic', topic.toString());
     });
@@ -190,10 +195,11 @@ export function CreateCourseForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tema(s)</FormLabel>
-              <TopicsListCourse
+              <TopicsList
                 onChange={(selected) => {
-                  setSelectedTopics(selected);
-                  field.onChange(selected);
+                  const topicsArray = Array.isArray(selected) ? selected : [selected];
+                setSelectedTopics(topicsArray);
+                form.setValue('topic', topicsArray);  
                 }}
                 value={selectedTopics}
               />
@@ -208,9 +214,7 @@ export function CreateCourseForm() {
         </Button>
 
         {/* Mensaje de carga */}
-        {loading && (
-          <div className="mt-4 text-blue-500">Creando curso...</div>
-        )}
+        {loading && <div className="mt-4 text-blue-500">Creando curso...</div>}
 
         {/* Mensaje de éxito */}
         {successMessage && (
