@@ -4,6 +4,7 @@ import { Skeleton } from '~/components/ui/skeleton';
 import { getUser } from '~/lib/session';
 import { LogoutButton } from './_components/log-out-button';
 import { QueryProvider } from '~/lib/query-provider';
+import Image from 'next/image';
 
 export default function PrivateLayout({
   children,
@@ -40,7 +41,7 @@ async function NavbarUserAvatar() {
   return (
     <div className="flex items-center gap-2">
       {/* // eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
         alt="Avatar"
         width={50}

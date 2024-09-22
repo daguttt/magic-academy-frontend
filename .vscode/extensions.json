@@ -5,6 +5,8 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "mylesmurphy.prettify-ts",
-    "yoavbls.pretty-ts-errors"
+    "yoavbls.pretty-ts-errors",
+    "ms-vsliveshare.vsliveshare",
+    "meganrogge.template-string-converter"
   ]
 }
