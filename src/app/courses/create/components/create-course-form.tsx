@@ -90,7 +90,6 @@ export function CreateCourseForm() {
     formData.append('slug', values.slug);
     formData.append('published_at', values.published_at || '');
 
-    const topics = Array.isArray(selectedTopics) ? selectedTopics : [selectedTopics];
     selectedTopics.forEach((topic) => {
       formData.append('topic', topic.toString());
     });

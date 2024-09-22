@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
-import { registerAction } from '~/app/auth/_actions/register-actions';
+import { registerAction } from '~/app/auth/_actions/register';
 import {
   Form,
   FormControl,

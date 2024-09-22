@@ -1,5 +1,5 @@
 'use client';
-import { Icourse } from '~/services/courses/courses';
+import { Icourse } from '~/services/courses/get-courses';
 import { CourseCard } from '~/components/course-card';
 
 interface CourseGridClientProps {
@@ -16,7 +16,7 @@ export default function CourseGridClient({ courses }: CourseGridClientProps) {
             className="transform rounded-lg bg-white p-4 shadow-md transition-transform hover:scale-105"
             title={course.name}
             instructorName={course.instructor_name}
-            date={course.published_at}
+            date={course.published_at ? new Date(course.published_at).toLocaleDateString() : 'Fecha no disponible'}
             thumbnailUrl={course.thumbnail_url}
             courseId={course.id} // Asegúrate de pasar el ID
           />

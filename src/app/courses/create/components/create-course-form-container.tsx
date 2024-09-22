@@ -17,7 +17,7 @@ const queryClient = new QueryClient();
 export function CreateCourseFormContainer() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Card className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto p-4">
+      <Card className="mx-auto w-full max-w-md p-4 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
         <CardHeader>
           <CardTitle className="text-center text-2xl">
             Crear un nuevo curso
@@ -32,7 +32,7 @@ export function CreateCourseFormContainer() {
         <CardFooter className="grid gap-2">
           <div className="mt-4 text-center text-sm">
             ¿Ya tienes un curso?{' '}
-            <Link href="/courses" className="underline">
+            <Link href="/home" className="underline">
               Ver cursos
             </Link>
           </div>
