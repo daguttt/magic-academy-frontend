@@ -22,18 +22,18 @@ export type courseResponseDto = z.infer<typeof courseSchema>;
 export type coursesResponseDto = z.infer<typeof coursesSchema>;
 
 // Interface for the course object
-export interface Icourse {
+export interface CourseData {
   id: number;
   name: string;
   description: string;
-  thumbnail_url: string | null;
+  thumbnailUrl: string | null;
   slug: string;
-  published_at: string;
-  instructor_name: string; // Added instructor_name
+  publishedAt: string;
+  instructorName: string; // Added instructor_name
 }
 
 // Service to fetch all classes (courses)
-export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
+export async function getAllCourses(): Promise<ApiResponseDto<CourseData[]>> {
   // Fetch data from the API and expect an array of courses
   const apiResponseDto = await fetchApi<coursesResponseDto>({
     isAuth: true,
@@ -54,7 +54,7 @@ export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
 }
 
 // Transformer function to map API response to internal format
-function dataTransformerFn(responseDtos: coursesResponseDto): Icourse[] {
+function dataTransformerFn(responseDtos: coursesResponseDto): CourseData[] {
   return responseDtos.map(
     ({
       id,
@@ -68,10 +68,10 @@ function dataTransformerFn(responseDtos: coursesResponseDto): Icourse[] {
       id, // Mapping `id`
       name, // Mapping `name`
       description, // Mapping `description`
-      thumbnail_url: thumbnail_url ?? '', // Default image if null
+      thumbnailUrl: thumbnail_url ?? '', // Default image if null
       slug: slug.toLowerCase(), // Slug in lowercase
-      published_at: new Date(published_at).toLocaleDateString(), // Format the date
-      instructor_name, // Mapping `instructor_name`
+      publishedAt: new Date(published_at).toLocaleDateString(), // Format the date
+      instructorName: instructor_name, // Mapping `instructor_name`
     })
   );
 }

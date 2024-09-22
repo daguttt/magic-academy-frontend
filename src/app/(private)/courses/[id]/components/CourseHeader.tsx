@@ -1,27 +1,20 @@
-// src/app/courses/[id]/components/CourseHeader.tsx
-'use client';
-
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { ICourseData } from './Course';
+import { getCourse } from '~/services/courses/course/get-course-by-id';
 
-export default function CourseHeader({ courseData }: ICourseData) {
-  const {
-    name,
-    description,
-    // thumbnail_url
-  } = courseData;
+interface CourseHeaderProps {
+  courseId: number;
+}
 
-  const [stars, setStars] = useState<string>('');
+export default async function CourseHeader({ courseId }: CourseHeaderProps) {
+  const { successRes, failureRes } = await getCourse(courseId);
 
-  useEffect(() => {
-    // Generate stars only on the client side
-    const generateStarRating = (): string => {
-      const starsCount = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
-      return '⭐'.repeat(starsCount);
-    };
-    setStars(generateStarRating());
-  }, []);
+  if (failureRes) return <p>{failureRes.detail}</p>;
+  console.log('successRes.data: ', successRes.data);
+
+  const { name, description } = successRes.data;
+
+  const starsCount = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
+  const stars = '⭐'.repeat(starsCount);
 
   return (
     <div className="flex items-center justify-between">
@@ -35,7 +28,6 @@ export default function CourseHeader({ courseData }: ICourseData) {
       <div>
         <Image
           src={
-            // thumbnail_url ||
             'https://gagadget.com/media/cache/d9/d3/d9d3c7ee6fceeaa3fcd883df795686ab.jpg'
           }
           alt="Miniatura"

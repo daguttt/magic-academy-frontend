@@ -1,6 +1,3 @@
-// src/app/courses/[id]/components/CourseForum.tsx
-'use client';
-
 export default function CourseForum() {
   return (
     <div className="my-4">
