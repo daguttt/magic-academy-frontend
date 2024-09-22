@@ -5,10 +5,13 @@ const nextConfig = {
       {
         source: '/',
         destination: '/home',
-        permanent: true,
+        permanent: true
       },
     ];
   },
+  images: {
+    domains: ['gagadget.com'], // To be able to add halo's default image in courses
+  }
 };
 
 export default nextConfig;
