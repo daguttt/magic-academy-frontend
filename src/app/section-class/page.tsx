@@ -2,7 +2,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import { CreateClassButton } from './components/create-class';
-import { CreateSectionSchema } from '~/components/section/create-section';
+import { CreateSectionButton } from './components/create-section';
 
 export default function HomePage() {
   const [queryClient] = useState(() => new QueryClient());
@@ -12,7 +12,7 @@ export default function HomePage() {
       <main className="container mx-auto flex min-h-[100svh] items-center justify-center px-4">
         <h1>Bienvenido</h1>
         <CreateClassButton />
-        <CreateSectionSchema />
+        <CreateSectionButton />
       </main>
     </QueryClientProvider>
   );

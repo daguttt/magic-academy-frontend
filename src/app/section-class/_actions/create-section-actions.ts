@@ -1,3 +1,5 @@
+'use server';
+
 import { ProblemDetailsResponseDto } from '~/lib/types';
 import {
   createSection,

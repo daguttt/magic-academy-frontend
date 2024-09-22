@@ -1,27 +1,34 @@
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { CreateSectionAction } from './_actions/create-section';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Button } from '../ui/button';
+import { useState } from 'react';
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
+} from '~/components/ui/form';
+import { Input } from '~/components/ui/input';
+import { Button } from '~/components/ui/button';
+import { CreateSectionAction } from '../_actions/create-section-actions';
 
+// Esquema de validación para el formulario de crear sección
 const createSectionSchema = z.object({
-  name: z.string().min(3, {
-    message: 'El nombre de la sección debe tener al menos 3 caracteres.',
-  }),
+  name: z
+    .string()
+    .min(3, {
+      message: 'El nombre de la sección debe tener al menos 3 caracteres.',
+    })
+    .max(100, { message: 'El nombre debe tener menos de 100 caracteres.' }),
 });
 
-export function CreateSectionSchema() {
+export function CreateSectionButton() {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const methods = useForm<z.infer<typeof createSectionSchema>>({
@@ -31,20 +38,19 @@ export function CreateSectionSchema() {
     },
   });
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { errors } = methods.formState;
 
   const mutation = useMutation({
     mutationFn: CreateSectionAction,
     onSuccess: (actionResult) => {
+      console.log(actionResult);
       if (!actionResult.success) {
+        toast.error('Error al crear la sección');
         toast.error(actionResult.error.detail);
         return;
       }
       toast.success('Sección creada con éxito');
-      setIsFormVisible(false);
+      setIsFormVisible(false); // Oculta el formulario al crear la sección
     },
     onError: (unexpectedError) => {
       const errorMessage =
@@ -54,28 +60,35 @@ export function CreateSectionSchema() {
     },
   });
 
-  const handlerCreateSection = (
-    values: z.infer<typeof createSectionSchema>
-  ) => {
-    mutation.mutate(values);
+  const handleCreateSection = (values: z.infer<typeof createSectionSchema>) => {
+    const createSectionDto = {
+      name: values.name,
+      course: 2, // Cambiar según sea necesario
+    };
+    mutation.mutate(createSectionDto);
   };
 
   return (
     <div>
+      {/* Botón para mostrar el formulario */}
       <Button onClick={() => setIsFormVisible(true)}>Crear Sección</Button>
+
+      {/* Mostrar formulario si el botón fue presionado */}
       {isFormVisible && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          {/* Contenedor del formulario */}
           <div className="relative w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+            {/* Botón para cerrar el formulario */}
             <button
               className="absolute right-2 top-2 text-gray-600 hover:text-gray-800"
               onClick={() => setIsFormVisible(false)}
             >
               &times;
             </button>
-            <FormProvider {...methods}>
+            <Form {...methods}>
               <form
                 className="space-y-4"
-                onSubmit={handleSubmit(handlerCreateSection)}
+                onSubmit={methods.handleSubmit(handleCreateSection)}
               >
                 <FormField
                   control={methods.control}
@@ -97,10 +110,10 @@ export function CreateSectionSchema() {
                   )}
                 />
                 <Button type="submit" disabled={mutation.isPending}>
-                  {mutation ? 'Creando sección...' : 'Crear sección'}
+                  {mutation.isPending ? 'Creando sección...' : 'Crear sección'}
                 </Button>
               </form>
-            </FormProvider>
+            </Form>
           </div>
         </div>
       )}
