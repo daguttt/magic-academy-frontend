@@ -7,7 +7,7 @@ export default async function CoursePage() {
 
   return (
     <div>
-       <SingleCourseHeader/>
+      <SingleCourseHeader />
       <CourseGridClient courses={apiResponse.successRes?.data || []} />
     </div>
   );

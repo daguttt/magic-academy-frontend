@@ -4,7 +4,7 @@
 export default function CourseSections() {
   return (
     <div className="my-4">
-      <h2 className="text-xl font-bold mb-2">Sección 1</h2>
+      <h2 className="mb-2 text-xl font-bold">Sección 1</h2>
       <ul>
         <li className="flex justify-between">
           <span>Título clase 1</span>
