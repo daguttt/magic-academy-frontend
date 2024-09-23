@@ -23,7 +23,7 @@ export type CourseResponseDto = z.infer<typeof courseSchema>;
 export type CoursesResponseDto = CourseResponseDto[];
 
 // Servicio para obtener todos los cursos
-export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
+export async function getAllCourses(): Promise<ApiResponseDto<CourseData[]>> {
   // Verifica la sesión y el rol del usuario
   const session = verifySession();
   const isInstructor = session.roleId === ROLES.INSTRUCTOR;
@@ -45,7 +45,6 @@ export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
     return apiResponseDto;
   }
 
-  // Transforma la respuesta exitosa
   try {
     const transformedData = transformServiceSuccessResponseData(
       apiResponseDto.successRes,
@@ -59,18 +58,18 @@ export async function getAllCourses(): Promise<ApiResponseDto<Icourse[]>> {
 }
 
 // Interface para el objeto curso
-export interface Icourse {
+export interface CourseData {
   id: number;
   name: string;
-  description: string | null;
-  thumbnail_url: string | null;
+  description: string;
+  thumbnailUrl: string | null;
   slug: string;
-  published_at: string | null;
-  instructor_name: string;
+  publishedAt: string;
+  instructorName: string; // Added instructor_name
 }
 
 // Función de transformación para mapear la respuesta de la API al formato interno
-function dataTransformerFn(responseDtos: CoursesResponseDto): Icourse[] {
+function dataTransformerFn(responseDtos: CoursesResponseDto): CourseData[] {
   return responseDtos.map(
     ({
       id,
@@ -84,12 +83,12 @@ function dataTransformerFn(responseDtos: CoursesResponseDto): Icourse[] {
       id,
       name,
       description: description ?? '',
-      thumbnail_url: thumbnail_url ?? '',
+      thumbnailUrl: thumbnail_url ?? '',
       slug: slug.toLowerCase(),
-      published_at: published_at
+      publishedAt: published_at
         ? new Date(published_at).toLocaleDateString()
         : '',
-      instructor_name,
+        instructorName: instructor_name
     })
   );
 }
