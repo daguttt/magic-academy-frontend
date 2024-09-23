@@ -3,10 +3,10 @@ import { cookies } from 'next/headers';
 import { SESSION_KEY_NAME } from './lib/session';
 
 const publicRoutes = ['/auth/login', '/auth/register', '/'];
-const baseProtectedRoutes = ['/home', '/courses'];
+const baseProtectedRoutes = ['/home', '/courses', '/auth/logout'];
 
 export default async function middleware(req: NextRequest) {
-  console.log(`Middleware hit: ${req.nextUrl.pathname}`);
+  console.log(`\nMiddleware hit: ${req.nextUrl.pathname}`);
   // Check if the current route is protected or public
   const path = req.nextUrl.pathname;
   const isPublicRoute = publicRoutes.includes(path);
@@ -40,11 +40,10 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    '/((?!api|_next/static|_next/image|.*\\.png$).*)',
+    '/((?!_next/static|_next/image|.*\\.png$).*)',
   ],
 };

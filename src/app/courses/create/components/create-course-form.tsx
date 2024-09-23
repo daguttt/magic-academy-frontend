@@ -191,7 +191,7 @@ export function CreateCourseForm() {
         <FormField
           control={form.control}
           name="topic"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Tema(s)</FormLabel>
               <TopicsList

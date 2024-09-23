@@ -3,15 +3,18 @@ interface IconWithTooltipProps {
   tooltipText: string;
 }
 
-const IconWithTooltip: React.FC<IconWithTooltipProps> = ({ icon, tooltipText }) => {
+const IconWithTooltip: React.FC<IconWithTooltipProps> = ({
+  icon,
+  tooltipText,
+}) => {
   return (
     <>
-    <span className="relative flex items-center group p-3">
-      {icon}
-      <div className="absolute ml-2 top-1/2 transform -translate-y-1/2 translate-x-8 w-max p-1 text-sm text-white bg-black rounded opacity-0 group-hover:translate-x-16 group-hover:opacity-100 transition-all duration-300 pointer-events-none px-3 py-1.5">
-        {tooltipText}
-      </div>
-    </span>
+      <span className="group relative flex items-center p-3">
+        {icon}
+        <div className="pointer-events-none absolute top-1/2 ml-2 w-max -translate-y-1/2 translate-x-8 transform rounded bg-black p-1 px-3 py-1.5 text-sm text-white opacity-0 transition-all duration-300 group-hover:translate-x-16 group-hover:opacity-100">
+          {tooltipText}
+        </div>
+      </span>
     </>
   );
 };
