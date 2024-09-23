@@ -81,6 +81,9 @@ importers:
       '@types/react':
         specifier: ^18
         version: 18.3.5
+      '@types/react-devtools':
+        specifier: ^3.6.2
+        version: 3.6.2
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
@@ -644,6 +647,9 @@ packages:
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+
+  '@types/react-devtools@3.6.2':
+    resolution: {integrity: sha512-5lc9Yskx/OUv/xBFhcostpjdx34wc4bvDkwsFYcGZ89kZUAoX4nIYv0K3NWqCfR3WlRSCJQOLfA0TM3KCISL7A==}
 
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
@@ -2667,6 +2673,8 @@ snapshots:
       undici-types: 6.19.8
 
   '@types/prop-types@15.7.12': {}
+
+  '@types/react-devtools@3.6.2': {}
 
   '@types/react-dom@18.3.0':
     dependencies:

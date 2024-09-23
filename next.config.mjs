@@ -10,8 +10,8 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ['gagadget.com', 'upload.wikimedia.org'], // To be able to add halo's default image in courses
-  }
+    domains: ['gagadget.com', 'upload.wikimedia.org', 'picsum.photos','res.cloudinary.com'], // Agregamos picsum.photos para imágenes remotas
+  },
 };
 
 export default nextConfig;
