@@ -85,10 +85,8 @@ function dataTransformerFn(responseDtos: CoursesResponseDto): CourseData[] {
       description: description ?? '',
       thumbnailUrl: thumbnail_url ?? '',
       slug: slug.toLowerCase(),
-      publishedAt: published_at
-        ? new Date(published_at).toLocaleDateString()
-        : '',
-        instructorName: instructor_name
+      publishedAt: published_at ? published_at : new Date().toISOString(),
+      instructorName: instructor_name,
     })
   );
 }
