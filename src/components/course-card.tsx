@@ -32,15 +32,18 @@ export function CourseCard({
   const finalThumbnailUrl = thumbnailUrl || defaultImage;
 
   const [hovered, setHovered] = useState(false);
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleClick = () => {
     router.push(`/courses/${courseId}`);
   };
 
   return (
-    <Card className={cn('min-w-56', className)} style={{ backgroundColor: '#05445e' }}>
-      <CardHeader className="p-0 relative">
+    <Card
+      className={cn('min-w-56', className)}
+      style={{ backgroundColor: '#05445e' }}
+    >
+      <CardHeader className="relative p-0">
         <picture className="overflow-hidden rounded-t-lg rounded-tl-lg">
           <img
             src={finalThumbnailUrl}
@@ -49,12 +52,12 @@ export function CourseCard({
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           />
-          <div 
+          <div
             className={`absolute bottom-0 left-0 right-0 p-2 transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-0'}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            <Button className="w-3/4 mx-auto" onClick={handleClick}>
+            <Button className="mx-auto w-3/4" onClick={handleClick}>
               Ir al curso <span className="ml-2">➡️</span>
             </Button>
           </div>

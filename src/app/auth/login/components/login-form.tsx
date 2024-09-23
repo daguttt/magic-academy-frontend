@@ -8,7 +8,6 @@ import { toast } from 'sonner';
 
 import { cn } from '~/lib/utils';
 import { type LoginDto } from '~/services/auth/login';
-import { loginAction } from '~/app/actions';
 
 import {
   Form,
@@ -22,6 +21,7 @@ import {
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { loginAction } from '../../_actions/login';
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: 'Ingresa un correo valido' }),
