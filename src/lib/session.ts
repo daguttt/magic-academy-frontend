@@ -53,7 +53,7 @@ export async function getUser() {
   if (apiResponseDto.successRes) return apiResponseDto.successRes.data;
 
   if (apiResponseDto.failureRes.status === 401) {
-    deleteSession();
-    redirect('/auth/login');
+    redirect('/auth/logout');
   }
+  throw new Error('User is not logged in');
 }

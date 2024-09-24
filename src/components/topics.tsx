@@ -35,7 +35,14 @@ export function TopicsList({ onChange, value }: TopicsListProps) {
   if (error) return <div>Error al cargar los temas</div>;
 
   if (apiResponseDto && apiResponseDto.failureRes)
-    return <div>Error: {apiResponseDto.failureRes.detail}</div>;
+    return (
+      <div>
+        Error:{' '}
+        <pre className="whitespace-pre">
+          {JSON.stringify(apiResponseDto.failureRes)}
+        </pre>
+      </div>
+    );
 
   // Si `data` está presente, obtenemos los topics
   const topics = apiResponseDto?.successRes.data || [];

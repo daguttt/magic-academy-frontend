@@ -1,27 +1,63 @@
 import { z } from 'zod';
-
 import { fetchApi } from '~/lib/fetch-api';
-import { ApiResponseDto } from '~/lib/types';
+import { verifySession } from '~/lib/session';
+import { ApiResponseDto, ROLES } from '~/lib/types';
 import { transformServiceSuccessResponseData } from '~/lib/utils';
+// Importa verifySession
 
-// Define the schema for a single course
+// Define el esquema para un curso
 export const courseSchema = z.object({
   id: z.number(),
   name: z.string(),
-  description: z.string(),
-  thumbnail_url: z.string().nullable(), // Can be null
+  description: z.string().nullable(),
+  thumbnail_url: z.string().nullable(),
   slug: z.string(),
-  published_at: z.string(),
-  instructor_name: z.string(), // Added instructor_name
+  published_at: z.string().nullable(),
+  instructor_name: z.string(),
 });
 
-// Define the schema for an array of courses
-const coursesSchema = z.array(courseSchema);
+// Define el esquema de respuesta que contiene cursos
+const responseSchema = z.array(courseSchema);
 
-export type courseResponseDto = z.infer<typeof courseSchema>;
-export type coursesResponseDto = z.infer<typeof coursesSchema>;
+export type CourseResponseDto = z.infer<typeof courseSchema>;
+export type CoursesResponseDto = CourseResponseDto[];
 
-// Interface for the course object
+// Servicio para obtener todos los cursos
+export async function getAllCourses(): Promise<ApiResponseDto<CourseData[]>> {
+  // Verifica la sesión y el rol del usuario
+  const session = verifySession();
+  const isInstructor = session.roleId === ROLES.INSTRUCTOR;
+
+  // Cambia el endpoint basado en si el usuario es instructor o no
+  const apiPath = isInstructor ? '/courses/instructor' : '/courses';
+
+  const apiResponseDto = await fetchApi<CoursesResponseDto>({
+    isAuth: true,
+    path: apiPath, // Usa la ruta correcta
+    init: {
+      method: 'GET',
+    },
+    responseSchema,
+  });
+
+  if (apiResponseDto.failureRes) {
+    console.error('API call failed:', apiResponseDto.failureRes);
+    return apiResponseDto;
+  }
+
+  try {
+    const transformedData = transformServiceSuccessResponseData(
+      apiResponseDto.successRes,
+      dataTransformerFn
+    );
+    return transformedData;
+  } catch (error) {
+    console.error('Error transforming data:', error);
+    throw error;
+  }
+}
+
+// Interface para el objeto curso
 export interface CourseData {
   id: number;
   name: string;
@@ -32,29 +68,8 @@ export interface CourseData {
   instructorName: string; // Added instructor_name
 }
 
-// Service to fetch all classes (courses)
-export async function getAllCourses(): Promise<ApiResponseDto<CourseData[]>> {
-  // Fetch data from the API and expect an array of courses
-  const apiResponseDto = await fetchApi<coursesResponseDto>({
-    isAuth: true,
-    path: '/courses',
-    init: {
-      method: 'GET',
-    },
-    responseSchema: coursesSchema, // Expect an array of courses
-  });
-
-  if (apiResponseDto.failureRes) return apiResponseDto;
-
-  // Transform the successful response
-  return transformServiceSuccessResponseData(
-    apiResponseDto.successRes,
-    dataTransformerFn
-  );
-}
-
-// Transformer function to map API response to internal format
-function dataTransformerFn(responseDtos: coursesResponseDto): CourseData[] {
+// Función de transformación para mapear la respuesta de la API al formato interno
+function dataTransformerFn(responseDtos: CoursesResponseDto): CourseData[] {
   return responseDtos.map(
     ({
       id,
@@ -65,13 +80,13 @@ function dataTransformerFn(responseDtos: coursesResponseDto): CourseData[] {
       published_at,
       instructor_name,
     }) => ({
-      id, // Mapping `id`
-      name, // Mapping `name`
-      description, // Mapping `description`
-      thumbnailUrl: thumbnail_url ?? '', // Default image if null
-      slug: slug.toLowerCase(), // Slug in lowercase
-      publishedAt: new Date(published_at).toLocaleDateString(), // Format the date
-      instructorName: instructor_name, // Mapping `instructor_name`
+      id,
+      name,
+      description: description ?? '',
+      thumbnailUrl: thumbnail_url ?? '',
+      slug: slug.toLowerCase(),
+      publishedAt: published_at ? published_at : new Date().toISOString(),
+      instructorName: instructor_name,
     })
   );
 }

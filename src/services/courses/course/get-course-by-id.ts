@@ -37,10 +37,12 @@ function dataTransformerFn(responseDto: courseResponseDto): CourseData {
   return {
     id: responseDto.id, // Map `id`
     name: responseDto.name, // Map `name`
-    description: responseDto.description, // Map `description`
+    description: responseDto.description ?? '', // Map `description`
     thumbnailUrl: responseDto.thumbnail_url ?? '', // Provide a default value if null
     slug: responseDto.slug.toLowerCase(), // Convert slug to lowercase
-    publishedAt: new Date(responseDto.published_at).toLocaleDateString(), // Format the date
+    publishedAt: new Date(
+      responseDto.published_at ?? new Date()
+    ).toLocaleDateString(), // Format the date
     instructorName: responseDto.instructor_name, // Map `instructor_name`
   };
 }
