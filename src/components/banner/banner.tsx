@@ -33,7 +33,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
           className
         )}
         style={{
-          backgroundImage: `url('${bannerImage}')`, // Usar la imagen seleccionada
+          backgroundImage: `url('${bannerImage}')`,
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50" />
