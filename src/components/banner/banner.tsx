@@ -20,13 +20,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
   };
 
   return (
-    <div>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="mb-4"
-      />
+    <div className="relative">
       <div
         className={clsx(
           'relative h-64 cursor-pointer bg-cover bg-center',
@@ -42,9 +36,15 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
             ¡Bienvenido instructor!
           </h1>
         </div>
-        <button className="absolute bottom-4 right-4 rounded bg-blue-600 px-4 py-2 text-white">
-          Acción
-        </button>
+        <label className="absolute bottom-4 right-4 cursor-pointer rounded bg-blue-600 px-4 py-2 text-white">
+          Agregar banner
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+        </label>
       </div>
     </div>
   );
