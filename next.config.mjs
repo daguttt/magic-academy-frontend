@@ -5,13 +5,18 @@ const nextConfig = {
       {
         source: '/',
         destination: '/home',
-        permanent: true
+        permanent: true,
       },
     ];
   },
   images: {
-    domains: ['gagadget.com'], // To be able to add halo's default image in courses
-  }
+    domains: [
+      'gagadget.com',
+      'upload.wikimedia.org',
+      'picsum.photos',
+      'res.cloudinary.com',
+    ], // Agregamos picsum.photos para imágenes remotas
+  },
 };
 
 export default nextConfig;

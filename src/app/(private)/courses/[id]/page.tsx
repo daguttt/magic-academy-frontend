@@ -34,10 +34,7 @@ export default async function SingleCoursePage(props: SingleCoursePageProps) {
         }
         tabSectionsComponent={
           <div className="my-8">
-            {/* <CourseSections>
-                <GetCourseSectionsServer courseId={courseData.id} />
-              </CourseSections> */}
-            <CourseSections courseId={Number(props.params.id)} />
+            <CourseSections courseId={courseId} />
           </div>
         }
       />

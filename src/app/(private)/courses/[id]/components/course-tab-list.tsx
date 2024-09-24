@@ -1,7 +1,6 @@
 'use client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 
-
 interface CourseTabListProps {
   tabSectionsComponent: React.ReactNode;
   tabForoComponent: React.ReactNode;
@@ -12,7 +11,7 @@ export function CourseTabList({
   tabSectionsComponent,
 }: CourseTabListProps) {
   return (
-    <Tabs defaultValue="account" className="w-full">
+    <Tabs defaultValue="sections" className="w-full">
       <TabsList>
         <TabsTrigger value="sections">Secciones</TabsTrigger>
         <TabsTrigger value="forum">Foro</TabsTrigger>

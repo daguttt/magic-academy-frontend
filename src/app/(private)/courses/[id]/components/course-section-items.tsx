@@ -34,7 +34,7 @@ export function CourseSectionItem({
   return (
     <AccordionItem key={section.sectionId} value={`item-${section.sectionId}`}>
       <AccordionTrigger>{section.sectionName}</AccordionTrigger>
-      <AccordionContent>{children}</AccordionContent>
+      <AccordionContent className="p-8">{children}</AccordionContent>
     </AccordionItem>
   );
 }

@@ -59,6 +59,9 @@ importers:
       react-hook-form:
         specifier: ^7.53.0
         version: 7.53.0(react@18.3.1)
+      server-only:
+        specifier: 0.0.1
+        version: 0.0.1
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -78,6 +81,9 @@ importers:
       '@types/react':
         specifier: ^18
         version: 18.3.5
+      '@types/react-devtools':
+        specifier: ^3.6.2
+        version: 3.6.2
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
@@ -641,6 +647,9 @@ packages:
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
+
+  '@types/react-devtools@3.6.2':
+    resolution: {integrity: sha512-5lc9Yskx/OUv/xBFhcostpjdx34wc4bvDkwsFYcGZ89kZUAoX4nIYv0K3NWqCfR3WlRSCJQOLfA0TM3KCISL7A==}
 
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
@@ -1896,6 +1905,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+
   set-function-length@1.2.2:
     resolution: {integrity: sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==}
     engines: {node: '>= 0.4'}
@@ -2661,6 +2673,8 @@ snapshots:
       undici-types: 6.19.8
 
   '@types/prop-types@15.7.12': {}
+
+  '@types/react-devtools@3.6.2': {}
 
   '@types/react-dom@18.3.0':
     dependencies:
@@ -4083,6 +4097,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.6.3: {}
+
+  server-only@0.0.1: {}
 
   set-function-length@1.2.2:
     dependencies:

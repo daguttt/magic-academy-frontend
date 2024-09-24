@@ -31,7 +31,7 @@ export async function getCourseSections(
     init: {
       method: 'GET',
     },
-    responseSchema: courseSectionsSchema, // Expect an array of courses
+    responseSchema: courseSectionsSchema, // Expect an array of sections
   });
 
   if (apiResponseDto.failureRes) return apiResponseDto;
