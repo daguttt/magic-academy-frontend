@@ -7,6 +7,7 @@ export async function createCourseAction(
   createCourseFormData: FormData
 ): Promise<ActionResultDto> {
   const createResult = await createCourse(createCourseFormData);
+
   if (createResult.failureRes) {
     return {
       success: false,
@@ -14,8 +15,10 @@ export async function createCourseAction(
     };
   }
 
+  console.log(JSON.stringify(createResult.successRes, null, 2), "******");
+
   return {
     success: true,
-    data: createResult.successRes.message,
+    data: createResult.successRes.data,
   };
 }

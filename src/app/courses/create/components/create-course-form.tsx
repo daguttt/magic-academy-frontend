@@ -14,10 +14,28 @@ import {
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createCourseAction } from '../../_actions/create-course-action';
 import { useMutation } from '@tanstack/react-query';
 import { TopicsList } from '~/components/topics';
+import { useRouter } from 'next/navigation';
+
+// Define el tipo para la respuesta de la mutación
+interface ProblemDetailsResponseDto {
+  // Ajusta estas propiedades según la definición real
+  status: number;
+  title: string;
+  detail: string;
+}
+
+interface CreateCourseResponse {
+  success: boolean;
+  data?: {
+    id: string; // Ajusta esto según el tipo real de tu ID
+    message: string;
+  };
+  error?: ProblemDetailsResponseDto | string; // Cambiado a aceptar un tipo más complejo
+}
 
 const getCurrentDate = () => {
   const today = new Date();
@@ -55,30 +73,38 @@ export function CreateCourseForm() {
     },
   });
 
+  const router = useRouter(); // Asegúrate de usar el hook de router
   const [selectedTopics, setSelectedTopics] = useState<number[]>([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
 
-  const mutation = useMutation({
+  const mutation = useMutation<CreateCourseResponse, Error, FormData>({
     mutationFn: async (formData: FormData) => {
-      console.log(formData);
       const action = await createCourseAction(formData);
-      console.log(action, '*****');
-      return action;
+      return action as CreateCourseResponse; // Asegúrate de que la función devuelva el tipo correcto
     },
     onMutate: () => {
-      setLoading(true); // Muestra el mensaje de carga al iniciar la mutación
+      setLoading(true);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('Respuesta del servidor:', data);
+      const courseId = data.data?.id; // Usa el operador de encadenamiento opcional
+      if (courseId) {
+        router.push(`/courses/${courseId}`);
+      } else {
+        console.error('El ID del curso no está disponible en la respuesta:', data);
+      }
       setSuccessMessage('Curso creado exitosamente!');
-      form.reset(); // Opcional: Resetea el formulario después de crear el curso
+      form.reset();
+      setThumbnailPreview(null);
     },
     onSettled: () => {
-      setLoading(false); // Oculta el mensaje de carga cuando la mutación se completa
+      setLoading(false);
     },
     onError: (error) => {
       console.error('Error al crear el curso:', error);
-      setLoading(false); // Asegúrate de ocultar el loader si hay un error
+      setLoading(false);
     },
   });
 
@@ -97,6 +123,24 @@ export function CreateCourseForm() {
       formData.append('thumbnail', values.thumbnail);
     }
     mutation.mutate(formData);
+  };
+
+  useEffect(() => {
+    return () => {
+      // Limpia la URL del objeto para evitar fugas de memoria
+      if (thumbnailPreview) {
+        URL.revokeObjectURL(thumbnailPreview);
+      }
+    };
+  }, [thumbnailPreview]);
+
+  const handleThumbnailChange = (file: File | null) => {
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setThumbnailPreview(objectUrl);
+    } else {
+      setThumbnailPreview(null);
+    }
   };
 
   return (
@@ -147,8 +191,9 @@ export function CreateCourseForm() {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    const files = e.target.files;
-                    field.onChange(files && files.length > 0 ? files[0] : null);
+                    const file = e.target.files?.[0] || null;
+                    field.onChange(file);
+                    handleThumbnailChange(file); // Manejar el cambio de miniatura
                   }}
                 />
               </FormControl>
@@ -156,6 +201,17 @@ export function CreateCourseForm() {
             </FormItem>
           )}
         />
+
+        {/* Vista previa de la miniatura */}
+        {thumbnailPreview && (
+          <div className="mt-4">
+            <img
+              src={thumbnailPreview}
+              alt="Vista previa de la miniatura"
+              className="max-h-64 w-full object-cover"
+            />
+          </div>
+        )}
 
         {/* Campo Slug */}
         <FormField
@@ -196,9 +252,11 @@ export function CreateCourseForm() {
               <FormLabel>Tema(s)</FormLabel>
               <TopicsList
                 onChange={(selected) => {
-                  const topicsArray = Array.isArray(selected) ? selected : [selected];
-                setSelectedTopics(topicsArray);
-                form.setValue('topic', topicsArray);  
+                  const topicsArray = Array.isArray(selected)
+                    ? selected
+                    : [selected];
+                  setSelectedTopics(topicsArray);
+                  form.setValue('topic', topicsArray);
                 }}
                 value={selectedTopics}
               />
