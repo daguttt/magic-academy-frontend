@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importa useRouter
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Progress } from '~/components/ui/progress';
 import { getStudentCourseProgresses } from '~/services/classes/course-progress/course-progress-user';
@@ -10,6 +9,7 @@ import { ApiResponseDto } from '~/lib/types';
 import { History } from 'lucide-react';
 import { capitalizeFirstLetter } from '~/lib/utils';
 import SkeletonProgress from './loanding/skeleton-progress';
+import Link from 'next/link';
 
 interface Course {
   courseId: number;
@@ -20,7 +20,6 @@ interface Course {
 export default function ProgressClass() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     getStudentCourseProgresses()
@@ -36,16 +35,12 @@ export default function ProgressClass() {
       });
   }, []);
 
-  const handleGoToClass = (courseId: number) => {
-    router.push(`/api/courses/${courseId}`); // Redirige a la ruta correspondiente
-  };
-
   return (
-    <div>
+    <div className="grid gap-6">
       {error && <p className="text-red-500">{error}</p>}
       {courses.length > 0 ? (
         courses.map((course) => (
-          <Card key={course.courseId} className="m-5 rounded-lg p-1 shadow-lg">
+          <Card key={course.courseId} className="rounded-lg p-1 shadow-lg">
             <CardHeader className="pb-2">
               <CardTitle className="flex text-2xl font-bold text-blue-600">
                 <History className="m-auto mr-1" size={35} />
@@ -53,8 +48,10 @@ export default function ProgressClass() {
                   {capitalizeFirstLetter(course.courseName)}
                 </div>
                 <div className="ml-3 flex w-full justify-end">
-                  <Button className="" onClick={() => handleGoToClass(course.courseId)}>
-                    <p>ir a clase</p>
+                  <Button asChild>
+                    <Link href={`/courses/${course.courseId}`}>
+                      ir a clase
+                    </Link>
                   </Button>
                 </div>
               </CardTitle>
