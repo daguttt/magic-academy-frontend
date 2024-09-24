@@ -3,19 +3,16 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Progress } from '~/components/ui/progress';
-import { fetchUserCourses } from '~/services/classes/course-progress/course-progress-user';
+import { getStudentCourseProgresses } from '~/services/classes/course-progress/course-progress-user';
 import { Button } from '../ui/button';
+import { ApiResponseDto } from '~/lib/types';
+import { History, Loader } from 'lucide-react';
+import { capitalizeFirstLetter } from '~/lib/utils';
 
 interface Course {
   courseId: number;
   courseName: string;
-  progress: number; // Este valor debería estar entre 0 y 1
-}
-
-interface ApiResponse {
-  code: number;
-  message: string;
-  data: Course[];
+  progress: number;
 }
 
 export default function ProgressClass() {
@@ -23,19 +20,15 @@ export default function ProgressClass() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MSwiaWF0IjoxNzI3MDQ5MDc1LCJleHAiOjE3MjcwNTI2NzV9.fQVn_Xfa10VUkLB1Vk4g_PTF7Wa9biTXPDCFLtQn-ZU';
-
-    fetchUserCourses(token)
-      .then((response: ApiResponse) => {
-        if (response.code === 200) {
-          setCourses(response.data || []);
+    getStudentCourseProgresses()
+      .then((response: ApiResponseDto<Course[]>) => {
+        if (response.successRes) {
+          setCourses(response.successRes.data); // Obtén los datos de la respuesta exitosa
         } else {
-          throw new Error(response.message || 'Error inesperado');
+          throw new Error(response.failureRes?.detail || 'Error inesperado');
         }
       })
-      .catch((error: any) => {
-        console.error('Error al obtener los cursos:', error);
+      .catch(() => {
         setError('No se pudo cargar la información de los cursos.');
       });
   }, []);
@@ -45,22 +38,29 @@ export default function ProgressClass() {
       {error && <p className="text-red-500">{error}</p>}
       {courses.length > 0 ? (
         courses.map((course) => (
-          <Card key={course.courseId} className="rounded-lg p-4 shadow-lg">
+          <Card key={course.courseId} className="m-5 rounded-lg p-1 shadow-lg">
             <CardHeader className="pb-2">
-              <CardTitle className="text-2xl font-bold text-blue-600">
-                {course.courseName}
+              <CardTitle className="flex text-2xl font-bold text-blue-600">
+                <History className="m-auto mr-1" size={35} />
+
+                <div className='m-auto'>{capitalizeFirstLetter(course.courseName)}</div>
+
+                <div className="ml-3 flex w-full justify-end">
+                  <Button className="" asChild>
+                    <p>ir a clase</p>
+                  </Button>
+                </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="mt-2 flex">
+            <CardContent className="mt-2">
               <Progress
                 value={course.progress * 100}
                 aria-label=""
-                className="flex-1"
+                className=""
               />
-              <p>{(course.progress * 100).toFixed(0)}% completado</p>
-              <Button asChild>
-                <p>ir a clase</p>
-              </Button>
+              <p className="pt-3">
+                {(course.progress * 100).toFixed(0)}% completado
+              </p>
             </CardContent>
           </Card>
         ))

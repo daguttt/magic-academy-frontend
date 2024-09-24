@@ -1,33 +1,67 @@
+'use server';
+
+import { cookies } from 'next/headers';
+import { z } from 'zod';
+import { fetchApi } from '~/lib/fetch-api';
+import { ApiResponseDto } from '~/lib/types';
+import { transformServiceSuccessResponseData } from '~/lib/utils';
+
+// Response Schema
 interface Course {
   courseId: number;
   courseName: string;
   progress: number;
 }
-  
-interface ApiResponse {
-    code: number;
-    message: string;
-    data: Course[];
-}
-  
-export async function fetchUserCourses (token: string): Promise<ApiResponse> {
-    const response = await fetch('http://localhost:3002/api/users/user/enrolled-courses', {
+
+const courseProgressesResponseSchema = z.array(
+  z.object({
+    courseId: z.number(),
+    courseName: z.string(),
+    progress: z.number().min(0).max(100),
+  })
+);
+
+export type CourseProgressesResponseDto = z.infer<
+  typeof courseProgressesResponseSchema
+>;
+
+// Servicio
+export async function getStudentCourseProgresses(): Promise<
+  ApiResponseDto<Course[]>
+> {
+  // Realiza la llamada a la API utilizando la función fetchApi
+  const apiResponseDto = await fetchApi<CourseProgressesResponseDto>({
+    isAuth: true,
+    path: '/users/user/enrolled-courses',
+    init: {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-  
-    if (!response.ok) {
-      throw new Error('Error al obtener los cursos');
-    }
-  
-    const data = await response.json();
-    return {
-      code: data.code,
-      message: data.message,
-      data: data.data,
-    };
-  };
-  
+    },
+    responseSchema: courseProgressesResponseSchema, // Esquema para validar la respuesta
+  });
+
+  // Verifica si hubo un error en la respuesta
+  if (apiResponseDto.failureRes) return apiResponseDto;
+
+  // Devuelve la respuesta exitosa
+  return transformServiceSuccessResponseData(
+    apiResponseDto.successRes,
+    dataTransformerFn
+  );
+}
+
+// Transformer
+interface CourseProgressData {
+  courseId: number;
+  courseName: string;
+  progress: number;
+}
+
+function dataTransformerFn(
+  courseProgresses: CourseProgressesResponseDto
+): CourseProgressData[] {
+  return courseProgresses.map((courseProgress) => ({
+    courseId: courseProgress.courseId,
+    courseName: courseProgress.courseName,
+    progress: courseProgress.progress
+  }));
+}
