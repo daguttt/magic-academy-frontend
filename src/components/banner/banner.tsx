@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 interface BannerProps {
@@ -7,15 +7,23 @@ interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ className }) => {
-  const [bannerImage, setBannerImage] = useState(
-    'https://picsum.photos/200/300'
-  );
+  const [bannerImage, setBannerImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Cargar la imagen almacenada al montar el componente
+    const storedImage = localStorage.getItem('bannerImage');
+    if (storedImage) {
+      setBannerImage(storedImage);
+    }
+  }, []);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setBannerImage(imageUrl);
+      // Guardar la imagen en localStorage
+      localStorage.setItem('bannerImage', imageUrl);
     }
   };
 
@@ -27,7 +35,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
           className
         )}
         style={{
-          backgroundImage: `url('${bannerImage}')`,
+          backgroundImage: `url('${bannerImage || 'https://picsum.photos/200/300'}')`,
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50" />
@@ -37,12 +45,12 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
           </h1>
         </div>
         <label className="absolute bottom-4 right-4 cursor-pointer rounded bg-blue-600 px-4 py-2 text-white">
-          Agregar banner
+          Seleccionar Archivo
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="hidden"
+            className="hidden" // Ocultar el input de archivo
           />
         </label>
       </div>
