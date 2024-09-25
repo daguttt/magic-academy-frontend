@@ -16,7 +16,7 @@ import {
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
-import { CreateClassAction } from '../_actions/create-class-actions';
+import { createClassAction } from '../_actions/create-class-actions';
 
 // Esquema de validación para el formulario de crear clase
 const createClassSchema = z.object({
@@ -39,7 +39,7 @@ export function CreateClassButton() {
   const { errors } = returnedPropsUseForm.formState;
 
   const mutation = useMutation({
-    mutationFn: CreateClassAction,
+    mutationFn: createClassAction,
     onSuccess: (actionResult) => {
       console.log(actionResult);
       if (!actionResult.success) {
