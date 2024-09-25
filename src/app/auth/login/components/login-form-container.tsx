@@ -35,7 +35,6 @@ export function LoginFormContainer() {
               <Image
                 src="/img/short-v-logo-default-bg.png"
                 alt="Descripción de la imagen"
-                layout="responsive"
                 width={700}
                 height={500}
               />

@@ -21,7 +21,7 @@ export function CreateUserFormContainer() {
   return (
     <QueryClientProvider client={queryClient}>
       <Card className="relative w-full max-w-sm pt-20">
-      <div className="absolute left-1/2 top-0 mb-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent p-6">
+        <div className="absolute left-1/2 top-0 mb-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent p-6">
           <div className="flex h-32 w-32 items-center justify-center">
             <picture>
               <source
@@ -35,7 +35,6 @@ export function CreateUserFormContainer() {
               <Image
                 src="/img/short-v-logo-default-bg.png"
                 alt="Descripción de la imagen"
-                layout="responsive"
                 width={700}
                 height={500}
               />
