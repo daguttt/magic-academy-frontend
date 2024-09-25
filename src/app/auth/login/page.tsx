@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-
 import { LoginFormContainer } from './components/login-form-container';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Ingreso',
