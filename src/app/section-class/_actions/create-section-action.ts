@@ -16,7 +16,7 @@ type ActionResultDto<TData = unknown> =
       error: ProblemDetailsResponseDto;
     };
 
-export async function CreateSectionAction(
+export async function createSectionAction(
   createSectionDto: CreateSectionDto
 ): Promise<ActionResultDto> {
   const createSectionResult = await createSection(createSectionDto);

@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
@@ -15,7 +16,7 @@ import {
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
-import { CreateSectionAction } from '../_actions/create-section-action';
+import { createSectionAction } from '../_actions/create-section-action';
 
 // Esquema de validación para el formulario de crear sección
 const createSectionSchema = z.object({
@@ -44,7 +45,7 @@ export function CreateSectionButton({ courseId }: CreateSectionButtonProps) {
   const { errors } = methods.formState;
 
   const mutation = useMutation({
-    mutationFn: CreateSectionAction,
+    mutationFn: createSectionAction,
     onSuccess: (actionResult) => {
       console.log(actionResult);
       if (!actionResult.success) {

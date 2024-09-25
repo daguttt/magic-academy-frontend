@@ -8,7 +8,9 @@ export interface CreateClassDto {
 export async function createClass(createClassDto: CreateClassDto) {
   // Validar que los valores no sean nulos antes de enviar
   if (!createClassDto.title || !createClassDto.courseSectionId) {
-    throw new Error("El título y el ID de la sección del curso son obligatorios.");
+    throw new Error(
+      'El título y el ID de la sección del curso son obligatorios.'
+    );
   }
 
   return await fetchApi({
@@ -20,7 +22,7 @@ export async function createClass(createClassDto: CreateClassDto) {
         courseSectionId: createClassDto.courseSectionId,
       }), // Asegúrate de que el cuerpo sea una cadena JSON
       headers: {
-        'Content-Type': 'application/json', // Establecer el tipo de contenido
+        'Content-Type': 'application/json',
       },
     },
     isAuth: true,

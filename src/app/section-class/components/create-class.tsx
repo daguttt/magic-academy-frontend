@@ -59,7 +59,11 @@ export function CreateClassButton() {
   });
 
   const handleCreateClass = (values: z.infer<typeof createClassSchema>) => {
-    mutation.mutate(values);
+    const createClassDto = {
+      title: values.title,
+      courseSectionId: 3, //Cambiar seccion quemado por el prop que se requiere en cada cart
+    };
+    mutation.mutate(createClassDto);
   };
 
   return (
