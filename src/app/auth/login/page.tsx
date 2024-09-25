@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-
 import { LoginFormContainer } from './components/login-form-container';
 
 export const metadata: Metadata = {
