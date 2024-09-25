@@ -11,7 +11,7 @@ export default async function CourseHeader({ courseId }: CourseHeaderProps) {
   if (failureRes) return <p>{failureRes.detail}</p>;
   console.log('successRes.data: ', successRes.data);
 
-  const { name, description } = successRes.data;
+  const { name, description, thumbnailUrl } = successRes.data;
 
   const starsCount = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
   const stars = '⭐'.repeat(starsCount);
@@ -28,6 +28,7 @@ export default async function CourseHeader({ courseId }: CourseHeaderProps) {
       <div>
         <Image
           src={
+            thumbnailUrl ??
             'https://gagadget.com/media/cache/d9/d3/d9d3c7ee6fceeaa3fcd883df795686ab.jpg'
           }
           alt="Miniatura"

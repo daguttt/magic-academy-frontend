@@ -5,14 +5,17 @@ import CourseHeader from './components/CourseHeader';
 import { CourseTabList } from './components/course-tab-list';
 import CourseForum from './components/CourseForum';
 import CourseSections from './components/CourseSections';
+import { verifySession } from '~/lib/session';
+import { ROLES } from '~/lib/types';
 
 interface SingleCoursePageProps {
   params: { id: string };
   searchParams: unknown;
 }
 
-export default async function SingleCoursePage(props: SingleCoursePageProps) {
-  // TODO: Vefify user session and user's role
+export default function SingleCoursePage(props: SingleCoursePageProps) {
+  const session = verifySession();
+  const manageable = session.roleId === ROLES.INSTRUCTOR;
 
   const courseId = Number(props.params.id);
 
@@ -34,7 +37,7 @@ export default async function SingleCoursePage(props: SingleCoursePageProps) {
         }
         tabSectionsComponent={
           <div className="my-8">
-            <CourseSections courseId={courseId} />
+            <CourseSections courseId={courseId} manageable={manageable} />
           </div>
         }
       />
