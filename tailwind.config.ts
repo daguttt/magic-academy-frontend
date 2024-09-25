@@ -78,6 +78,11 @@ const config: Config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      screens: {
+        'sm-max-h': {
+          raw: '(max-height: 600px)',
+        },
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

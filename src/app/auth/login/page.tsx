@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="container mx-auto flex min-h-[100svh] items-center justify-center px-4">
+    <main className="sm-max-h:pt-28 sm-max-h:pb-6 container mx-auto flex min-h-[100svh] items-center justify-center px-4">
       <LoginFormContainer />
     </main>
   );
