@@ -7,12 +7,10 @@ export default function Home() {
       <div>
         <section className="h-96 bg-gray-500">
           <h1 className="ml-5 text-2xl text-black">Hola</h1>
-          <LastCourses/>
+          <LastCourses />
         </section>
-
         <section className="h-96 bg-red-50">
           <div className="ml-5">
-            <ProgressClass/>
             <h1 className="bg-red-100 text-black">Hello World</h1>
             <Button>Click me</Button>
           </div>
