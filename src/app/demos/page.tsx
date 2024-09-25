@@ -1,6 +1,5 @@
 import { Button } from '~/components/ui/button';
 import LastCourses from '~/components/last-course-seen/last-course-seen';
-import ProgressClass from '~/components/progress/progress-class';
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
 
         <section className="h-96 bg-red-50">
           <div className="ml-5">
-            <ProgressClass/>
             <h1 className="bg-red-100 text-black">Hello World</h1>
             <Button>Click me</Button>
           </div>
