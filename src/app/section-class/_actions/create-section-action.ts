@@ -1,14 +1,24 @@
 'use server';
 
-import { type ActionResultDto } from '~/lib/types';
+import { ProblemDetailsResponseDto } from '~/lib/types';
 import {
   createSection,
   CreateSectionDto,
 } from '~/services/section/create-section';
 
+type ActionResultDto<TData = unknown> =
+  | {
+      success: true;
+      data: TData;
+    }
+  | {
+      success: false;
+      error: ProblemDetailsResponseDto;
+    };
+
 export async function createSectionAction(
   createSectionDto: CreateSectionDto
-): Promise<ActionResultDto<string>> {
+): Promise<ActionResultDto> {
   const createSectionResult = await createSection(createSectionDto);
   if (createSectionResult.failureRes)
     return {

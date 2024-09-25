@@ -3,61 +3,62 @@ import { fetchApi } from '~/lib/fetch-api';
 import { ApiResponseDto } from '~/lib/types';
 import { transformServiceSuccessResponseData } from '~/lib/utils';
 
-const sectionClassesSchema = z.array(
+// Response Schema
+const sectionClassesResponseSchema = z.array(
   z.object({
     id: z.number(),
     title: z.string(),
     content: z.string(),
-    url: z.string(),
+    url: z.string().nullable(), // Permitir que sea nulo si no hay URL
     created_at: z.string(),
-    courseSection: z.object({
-      id: z.number(),
-      name: z.string(),
-    }),
   })
 );
 
-export type SectionClassesResponseDto = z.infer<typeof sectionClassesSchema>;
+export type SectionClasesResponseDto = z.infer<
+  typeof sectionClassesResponseSchema
+>;
 
-//Service to fetch all the classes of a section
+// Servicio para obtener todas las clases de una sección
 export async function getSectionClasses(
   sectionId: number
-): Promise<ApiResponseDto<SectionClassesData[]>> {
-  const apiResponseDto = await fetchApi<SectionClassesResponseDto>({
+): Promise<ApiResponseDto<SectionClassData[]>> {
+  const apiResponseDto = await fetchApi<SectionClasesResponseDto>({
     isAuth: true,
     path: `/course-section/${sectionId}/classes`,
     init: {
       method: 'GET',
     },
-    responseSchema: sectionClassesSchema, // Expect an array of classes
+    responseSchema: sectionClassesResponseSchema,
   });
 
   if (apiResponseDto.failureRes) return apiResponseDto;
 
-  // Transform the successful response
+  console.log(JSON.stringify(apiResponseDto), 'aqui esta el api response');
+
+  // Transformamos la respuesta exitosa
   return transformServiceSuccessResponseData(
     apiResponseDto.successRes,
     dataTransformerFn
   );
 }
 
-// Transformer function to map API response to internal format
-export interface SectionClassesData {
+// Transformer
+export interface SectionClassData {
   classId: number;
   classTitle: string;
   classContent: string;
-  classUrl: string;
+  classUrl: string | null; // Permitir que sea nulo si no hay URL
   classCreatedAt: string;
 }
 
 function dataTransformerFn(
-  responseDto: SectionClassesResponseDto
-): SectionClassesData[] {
-  return responseDto.map(({ id, title, content, url, created_at }) => ({
-    classId: id,
-    classTitle: title,
-    classContent: content,
-    classUrl: url,
-    classCreatedAt: created_at,
+  responseDto: SectionClasesResponseDto
+): SectionClassData[] {
+  return responseDto.map((item) => ({
+    classId: item.id,
+    classTitle: item.title,
+    classContent: item.content,
+    classUrl: item.url,
+    classCreatedAt: item.created_at,
   }));
 }
