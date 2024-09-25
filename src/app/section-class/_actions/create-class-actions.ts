@@ -1,6 +1,6 @@
 'use server';
 
-import { ActionResultDto } from '~/lib/types';
+import { type ActionResultDto } from '~/lib/types';
 import { createClass, CreateClassDto } from '~/services/classes/create-class';
 
 export async function createClassAction(

@@ -16,60 +16,62 @@ import {
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
-import { createClassAction } from '../_actions/create-class-actions';
+import { CreateSectionAction } from '../_actions/create-section-actions';
 
-// Esquema de validación para el formulario de crear clase
-const createClassSchema = z.object({
-  title: z
+// Esquema de validación para el formulario de crear sección
+const createSectionSchema = z.object({
+  name: z
     .string()
-    .min(1, { message: 'El título de la clase es requerido.' })
-    .max(100, { message: 'El título debe tener menos de 100 caracteres.' }),
+    .min(3, {
+      message: 'El nombre de la sección debe tener al menos 3 caracteres.',
+    })
+    .max(100, { message: 'El nombre debe tener menos de 100 caracteres.' }),
 });
 
-export function CreateClassButton() {
+export function CreateSectionButton() {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const returnedPropsUseForm = useForm<z.infer<typeof createClassSchema>>({
-    resolver: zodResolver(createClassSchema),
+  const methods = useForm<z.infer<typeof createSectionSchema>>({
+    resolver: zodResolver(createSectionSchema),
     defaultValues: {
-      title: '',
+      name: '',
     },
   });
 
-  const { errors } = returnedPropsUseForm.formState;
+  const { errors } = methods.formState;
 
   const mutation = useMutation({
-    mutationFn: createClassAction,
+    mutationFn: CreateSectionAction,
     onSuccess: (actionResult) => {
       console.log(actionResult);
       if (!actionResult.success) {
-        toast.error('Error al crear la clase');
+        toast.error('Error al crear la sección');
         toast.error(actionResult.error.detail);
         return;
       }
-      toast.success('Clase creada con éxito');
-      setIsFormVisible(false); // Oculta el formulario al crear la clase
+      toast.success('Sección creada con éxito');
+      setIsFormVisible(false); // Oculta el formulario al crear la sección
     },
     onError: (unexpectedError) => {
       const errorMessage =
-        unexpectedError?.message || 'Error inesperado al crear la clase';
+        unexpectedError?.message || 'Error inesperado al crear la sección';
       toast.error(errorMessage);
       console.error(errorMessage);
     },
   });
 
-  const handleCreateClass = (values: z.infer<typeof createClassSchema>) => {
-    const createClassDto = {
-      title: values.title,
-      courseSectionId: 3, //Cambiar seccion quemado por el prop que se requiere en cada cart
+  const handleCreateSection = (values: z.infer<typeof createSectionSchema>) => {
+    const createSectionDto = {
+      name: values.name,
+      course: 2, // Cambiar según sea necesario
     };
-    mutation.mutate(createClassDto);
+    mutation.mutate(createSectionDto);
   };
 
   return (
     <div>
       {/* Botón para mostrar el formulario */}
-      <Button onClick={() => setIsFormVisible(true)}>Crear Clase</Button>
+      <Button onClick={() => setIsFormVisible(true)}>Crear Sección</Button>
 
       {/* Mostrar formulario si el botón fue presionado */}
       {isFormVisible && (
@@ -83,32 +85,32 @@ export function CreateClassButton() {
             >
               &times;
             </button>
-            <Form {...returnedPropsUseForm}>
+            <Form {...methods}>
               <form
                 className="space-y-4"
-                onSubmit={returnedPropsUseForm.handleSubmit(handleCreateClass)}
+                onSubmit={methods.handleSubmit(handleCreateSection)}
               >
                 <FormField
-                  control={returnedPropsUseForm.control}
-                  name="title"
+                  control={methods.control}
+                  name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombre de la Clase</FormLabel>
+                      <FormLabel>Nombre de la Sección</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Título de la clase"
+                          placeholder="Nombre de la Sección"
                           {...field}
                           type="text"
                         />
                       </FormControl>
-                      {errors.title && (
-                        <FormMessage>{errors.title.message}</FormMessage>
+                      {errors.name && (
+                        <FormMessage>{errors.name.message}</FormMessage>
                       )}
                     </FormItem>
                   )}
                 />
                 <Button type="submit" disabled={mutation.isPending}>
-                  {mutation.isPending ? 'Creando clase...' : 'Crear clase'}
+                  {mutation.isPending ? 'Creando sección...' : 'Crear sección'}
                 </Button>
               </form>
             </Form>

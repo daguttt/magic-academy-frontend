@@ -1,10 +1,12 @@
-import { ActionResultDto } from '~/lib/types';
+'use server';
+
+import { type ActionResultDto } from '~/lib/types';
 import {
   createSection,
   CreateSectionDto,
 } from '~/services/section/create-section';
 
-export async function CreateSection(
+export async function CreateSectionAction(
   createSectionDto: CreateSectionDto
 ): Promise<ActionResultDto<string>> {
   const createSectionResult = await createSection(createSectionDto);
