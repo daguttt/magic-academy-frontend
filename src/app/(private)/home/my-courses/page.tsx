@@ -1,5 +1,4 @@
 import ProgressClass from '~/components/progress/progress-class';
-import { Progress } from '~/components/ui/progress';
 
 export default function ProgressPage() {
   return (
