@@ -7,7 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
-import { LogoutButton } from './log-out-button';
+import { logoutAction } from '../_actions/logout';
+import { useMutation } from '@tanstack/react-query';
 
 interface NavbarUserAvatarMenuProps {
   userAvatarUrl: string;
@@ -18,6 +19,7 @@ export function NavbarUserAvatarMenu({
   userAvatarUrl,
   userName,
 }: NavbarUserAvatarMenuProps) {
+  const mutation = useMutation({ mutationFn: logoutAction });
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,9 +28,9 @@ export function NavbarUserAvatarMenu({
           <AvatarFallback>{userName[0]}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem>
-          <LogoutButton>Cerrar sesión</LogoutButton>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => mutation.mutate()}>
+          Cerrar sesión
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
