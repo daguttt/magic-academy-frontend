@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/ui/accordion';
-import { SectionClassesData } from '~/services/classes/get-section-classes';
+import { SectionClassData } from '~/services/classes/get-section-classes';
 
 interface SectionClassItemsContainerProps {
   children: React.ReactNode[];
@@ -22,7 +22,7 @@ export function SectionClassItemsContainer({
 }
 
 interface SectionClassItemProps {
-  classItem: SectionClassesData;
+  classItem: SectionClassData;
   classNumber: number;
 }
 export function SectionClassItem({

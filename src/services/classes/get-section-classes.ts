@@ -1,25 +1,34 @@
+import { z } from 'zod';
 import { fetchApi } from '~/lib/fetch-api';
 import { ApiResponseDto } from '~/lib/types';
+import { transformServiceSuccessResponseData } from '~/lib/utils';
 
-// Definición del tipo de respuesta de las clases de una sección
-export interface SectionClassesData {
-  classId: number;
-  classTitle: string;
-  classContent: string;
-  classUrl: string | null;  // Permitir que sea nulo si no hay URL
-  classCreatedAt: string;
-}
+// Response Schema
+const sectionClassesResponseSchema = z.array(
+  z.object({
+    id: z.number(),
+    title: z.string(),
+    content: z.string(),
+    url: z.string().nullable(), // Permitir que sea nulo si no hay URL
+    created_at: z.string(),
+  })
+);
+
+export type SectionClasesResponseDto = z.infer<
+  typeof sectionClassesResponseSchema
+>;
 
 // Servicio para obtener todas las clases de una sección
 export async function getSectionClasses(
   sectionId: number
-): Promise<ApiResponseDto<SectionClassesData[]>> {
-  const apiResponseDto = await fetchApi<SectionClassesData[]>({
+): Promise<ApiResponseDto<SectionClassData[]>> {
+  const apiResponseDto = await fetchApi<SectionClasesResponseDto>({
     isAuth: true,
     path: `/course-section/${sectionId}/classes`,
     init: {
       method: 'GET',
     },
+    responseSchema: sectionClassesResponseSchema,
   });
 
   if (apiResponseDto.failureRes) return apiResponseDto;
@@ -27,21 +36,25 @@ export async function getSectionClasses(
   console.log(JSON.stringify(apiResponseDto), 'aqui esta el api response');
 
   // Transformamos la respuesta exitosa
-  return {
-    successRes: {
-      code: apiResponseDto.successRes.code,
-      message: apiResponseDto.successRes.message,
-      data: dataTransformerFn(apiResponseDto.successRes.data),
-    },
-    failureRes: null,
-  };
+  return transformServiceSuccessResponseData(
+    apiResponseDto.successRes,
+    dataTransformerFn
+  );
 }
 
-// Función transformadora para mapear la respuesta de la API al formato interno
+// Transformer
+export interface SectionClassData {
+  classId: number;
+  classTitle: string;
+  classContent: string;
+  classUrl: string | null; // Permitir que sea nulo si no hay URL
+  classCreatedAt: string;
+}
+
 function dataTransformerFn(
-  responseDto: any[]
-): SectionClassesData[] {
-  return responseDto.map(item => ({
+  responseDto: SectionClasesResponseDto
+): SectionClassData[] {
+  return responseDto.map((item) => ({
     classId: item.id,
     classTitle: item.title,
     classContent: item.content,
