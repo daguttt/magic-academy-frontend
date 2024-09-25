@@ -117,6 +117,7 @@ function validateServerResponseData({
  */
 function handleZodErrorDev(error: ZodError) {
   logValidationZodIssues(error.issues);
+  console.error('Zod validation errors:', error.issues);
   throw new Error('Response data does not match the provided schema');
 }
 

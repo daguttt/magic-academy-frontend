@@ -1,65 +1,43 @@
 // src/app/courses/[id]/page.tsx
-'use client';
 
-import { useState } from 'react';
+import { Button } from '~/components/ui/button';
 import CourseHeader from './components/CourseHeader';
-import CourseSections from './components/CourseSections';
+import { CourseTabList } from './components/course-tab-list';
 import CourseForum from './components/CourseForum';
-import CourseComments from './components/CourseComments';
+import CourseSections from './components/CourseSections';
 
-export default function CourseDetail() {
-  const [showSections, setShowSections] = useState(false);
-  const [showForum, setShowForum] = useState(false);
+interface SingleCoursePageProps {
+  params: { id: string };
+  searchParams: unknown;
+}
+
+export default async function SingleCoursePage(props: SingleCoursePageProps) {
+  // TODO: Vefify user session and user's role
+
+  const courseId = Number(props.params.id);
 
   return (
     <div className="container mx-auto px-4">
-      {/* Course header */}
-      <CourseHeader />
+      <CourseHeader courseId={courseId} />
 
-      {/* Button to continue the course */}
       <div className="my-4">
-        <button className="rounded-lg bg-blue-500 px-4 py-2 text-white">
-          Continue Course
-        </button>
+        {/* TODO: Show 'Iniciar curso' if the student is not enrolled. If they are, show 'Continuar curso' */}
+        {/* TODO: Navigate to the last seen class of the course if the studen is enrolled */}
+        <Button>Continuar curso</Button>
       </div>
 
-      {/* Toggle buttons for Sections and Forum */}
-      <div className="my-8 space-x-4">
-        {/* Sections Button */}
-        <button
-          className="rounded-lg bg-gray-700 px-4 py-2 text-white"
-          onClick={() => setShowSections(!showSections)}
-        >
-          {showSections ? 'Hide Sections' : 'Show Sections'}
-        </button>
-
-        {/* Forum Button */}
-        <button
-          className="rounded-lg bg-gray-700 px-4 py-2 text-white"
-          onClick={() => setShowForum(!showForum)}
-        >
-          {showForum ? 'Hide Forum' : 'Show Forum'}
-        </button>
-      </div>
-
-      {/* Display Sections based on state */}
-      {showSections && (
-        <div className="my-8">
-          <CourseSections />
-        </div>
-      )}
-
-      {/* Display Forum based on state */}
-      {showForum && (
-        <div className="my-8">
-          <CourseForum />
-        </div>
-      )}
-
-      {/* Comments section */}
-      <div className="my-8">
-        <CourseComments />
-      </div>
+      <CourseTabList
+        tabForoComponent={
+          <div className="my-8">
+            <CourseForum />
+          </div>
+        }
+        tabSectionsComponent={
+          <div className="my-8">
+            <CourseSections courseId={courseId} />
+          </div>
+        }
+      />
     </div>
   );
 }

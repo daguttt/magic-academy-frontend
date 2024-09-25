@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import { verifySession } from '~/lib/session';
 import { ROLES } from '~/lib/types';
 import { StudentHome } from './_pages/student-home-page';
-import { InstructorHome } from './_pages/instructor-home-page';
 import { AdminHome } from './_pages/admin-home-page';
+import InstructorHome from './_pages/instructor-home-page';
 
 export default function HomePage() {
   const session = verifySession();
