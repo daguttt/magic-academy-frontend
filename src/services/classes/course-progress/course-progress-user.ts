@@ -59,6 +59,6 @@ function dataTransformerFn(
   return courseProgresses.map((courseProgress) => ({
     courseId: courseProgress.courseId,
     courseName: courseProgress.courseName,
-    progress: courseProgress.progress
+    progress: courseProgress.progress,
   }));
 }

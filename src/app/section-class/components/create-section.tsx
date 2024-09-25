@@ -16,6 +16,7 @@ import {
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
+
 import { createSectionAction } from '../_actions/create-section-action';
 
 // Esquema de validación para el formulario de crear sección
@@ -27,6 +28,7 @@ const createSectionSchema = z.object({
     })
     .max(100, { message: 'El nombre debe tener menos de 100 caracteres.' }),
 });
+
 
 interface CreateSectionButtonProps {
   courseId: number; // Acepta courseId como prop

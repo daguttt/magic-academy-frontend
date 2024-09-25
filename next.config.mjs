@@ -5,12 +5,17 @@ const nextConfig = {
       {
         source: '/',
         destination: '/home',
-        permanent: true
+        permanent: true,
       },
     ];
   },
   images: {
-    domains: ['gagadget.com', 'upload.wikimedia.org', 'picsum.photos','res.cloudinary.com'], // Agregamos picsum.photos para imágenes remotas
+    domains: [
+      'gagadget.com',
+      'upload.wikimedia.org',
+      'picsum.photos',
+      'res.cloudinary.com',
+    ], // Agregamos picsum.photos para imágenes remotas
   },
 };
 
