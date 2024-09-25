@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
@@ -26,11 +26,11 @@ export default function LastCourse() {
         if (response.successRes && Array.isArray(response.successRes.data)) {
           setLastSeenClasses(response.successRes.data);
         } else {
-          console.error("Error en la respuesta:", response);
+          console.error('Error en la respuesta:', response);
           setLastSeenClasses([]); // Restablece a un arreglo vacío si la respuesta es incorrecta
         }
       } catch (error) {
-        console.error("Error al obtener las clases vistas:", error);
+        console.error('Error al obtener las clases vistas:', error);
         setLastSeenClasses([]); // Muestra un mensaje de error o renderiza contenido alternativo
       }
     }
@@ -44,7 +44,10 @@ export default function LastCourse() {
     <div>
       {lastSeenClasses.length > 0 ? (
         lastSeenClasses.map((lastClass) => (
-          <Card key={lastClass.classId} className="group w-52 overflow-hidden rounded-b-lg border border-gray-200 shadow-lg">
+          <Card
+            key={lastClass.classId}
+            className="group w-52 overflow-hidden rounded-b-lg border border-gray-200 shadow-lg"
+          >
             <CardHeader className="p-0">
               <div>
                 <img
@@ -60,8 +63,12 @@ export default function LastCourse() {
               <p className="text-xs text-gray-600">
                 Class {lastClass.classNumber} of {lastClass.totalCourseClasses}
               </p>
-              <CardTitle className="text-lg font-semibold">{lastClass.title}</CardTitle>
-              <p className="text-sm text-gray-500">Course ID: {lastClass.courseId}</p>
+              <CardTitle className="text-lg font-semibold">
+                {lastClass.title}
+              </CardTitle>
+              <p className="text-sm text-gray-500">
+                Course ID: {lastClass.courseId}
+              </p>
             </CardContent>
           </Card>
         ))
@@ -71,4 +78,3 @@ export default function LastCourse() {
     </div>
   );
 }
-

@@ -13,7 +13,7 @@ const CourseHeader: React.FC = () => {
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      
+
       <div className="relative mx-auto max-w-4xl px-4">
         <h1 className="text-4xl font-bold uppercase tracking-wide shadow-lg">
           ¡Accede a cientos de cursos gratis!

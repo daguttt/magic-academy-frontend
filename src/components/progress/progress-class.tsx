@@ -49,9 +49,7 @@ export default function ProgressClass() {
                 </div>
                 <div className="ml-3 flex w-full justify-end">
                   <Button asChild>
-                    <Link href={`/courses/${course.courseId}`}>
-                      ir a clase
-                    </Link>
+                    <Link href={`/courses/${course.courseId}`}>ir a clase</Link>
                   </Button>
                 </div>
               </CardTitle>

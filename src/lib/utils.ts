@@ -36,7 +36,7 @@ export function extractJwtPayload(token: string) {
   }
 }
 
-export function capitalizeFirstLetter(text:string) : string {
-  if(!text) return '';
-  return text.charAt(0).toUpperCase() + text.slice(1)
+export function capitalizeFirstLetter(text: string): string {
+  if (!text) return '';
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }

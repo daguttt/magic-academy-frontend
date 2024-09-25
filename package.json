@@ -8,8 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format:run": "prettier -w --plugin-search-dir=. .",
-    "format:check": "prettier -c --plugin-search-dir=. ."
+    "format:run": "prettier -w .",
+    "format:check": "prettier -c .",
+    "format:check-with-plugin": "prettier --plugin ./node_modules/prettier-plugin-tailwindcss/dist/index.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

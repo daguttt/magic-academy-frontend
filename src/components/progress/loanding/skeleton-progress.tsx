@@ -17,7 +17,7 @@ export default function SkeletonProgress() {
       </CardHeader>
 
       <CardContent className="mt-2">
-        <Progress value={0} className="bg-gray-300 mb-3" />
+        <Progress value={0} className="mb-3 bg-gray-300" />
         <p className="h-4 w-1/4 rounded bg-gray-300 pt-3"></p>
       </CardContent>
     </Card>

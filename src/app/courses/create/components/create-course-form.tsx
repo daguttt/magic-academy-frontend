@@ -196,9 +196,11 @@ export function CreateCourseForm() {
               <FormLabel>Tema(s)</FormLabel>
               <TopicsList
                 onChange={(selected) => {
-                  const topicsArray = Array.isArray(selected) ? selected : [selected];
-                setSelectedTopics(topicsArray);
-                form.setValue('topic', topicsArray);  
+                  const topicsArray = Array.isArray(selected)
+                    ? selected
+                    : [selected];
+                  setSelectedTopics(topicsArray);
+                  form.setValue('topic', topicsArray);
                 }}
                 value={selectedTopics}
               />

@@ -15,7 +15,8 @@ export default async function ProgressClass() {
 
   const courses = successRes.data;
 
-  if (courses.length === 0) return <p>Todavía no te has inscrito a ningún curso</p>;
+  if (courses.length === 0)
+    return <p>Todavía no te has inscrito a ningún curso</p>;
 
   return (
     <div className="grid gap-6">
