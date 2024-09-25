@@ -1,63 +1,51 @@
-import { z } from 'zod';
 import { fetchApi } from '~/lib/fetch-api';
 import { ApiResponseDto } from '~/lib/types';
-import { transformServiceSuccessResponseData } from '~/lib/utils';
 
-const sectionClassesSchema = z.array(
-  z.object({
-    id: z.number(),
-    title: z.string(),
-    content: z.string(),
-    url: z.string(),
-    created_at: z.string(),
-    courseSection: z.object({
-      id: z.number(),
-      name: z.string(),
-    }),
-  })
-);
+// Definición del tipo de respuesta de las clases de una sección
+export interface SectionClassesData {
+  classId: number;
+  classTitle: string;
+  classContent: string;
+  classUrl: string | null;  // Permitir que sea nulo si no hay URL
+  classCreatedAt: string;
+}
 
-export type SectionClassesResponseDto = z.infer<typeof sectionClassesSchema>;
-
-//Service to fetch all the classes of a section
+// Servicio para obtener todas las clases de una sección
 export async function getSectionClasses(
   sectionId: number
 ): Promise<ApiResponseDto<SectionClassesData[]>> {
-  const apiResponseDto = await fetchApi<SectionClassesResponseDto>({
+  const apiResponseDto = await fetchApi<SectionClassesData[]>({
     isAuth: true,
     path: `/course-section/${sectionId}/classes`,
     init: {
       method: 'GET',
     },
-    responseSchema: sectionClassesSchema, // Expect an array of classes
   });
 
   if (apiResponseDto.failureRes) return apiResponseDto;
 
-  // Transform the successful response
-  return transformServiceSuccessResponseData(
-    apiResponseDto.successRes,
-    dataTransformerFn
-  );
+  console.log(JSON.stringify(apiResponseDto), 'aqui esta el api response');
+
+  // Transformamos la respuesta exitosa
+  return {
+    successRes: {
+      code: apiResponseDto.successRes.code,
+      message: apiResponseDto.successRes.message,
+      data: dataTransformerFn(apiResponseDto.successRes.data),
+    },
+    failureRes: null,
+  };
 }
 
-// Transformer function to map API response to internal format
-export interface SectionClassesData {
-  classId: number;
-  classTitle: string;
-  classContent: string;
-  classUrl: string;
-  classCreatedAt: string;
-}
-
+// Función transformadora para mapear la respuesta de la API al formato interno
 function dataTransformerFn(
-  responseDto: SectionClassesResponseDto
+  responseDto: any[]
 ): SectionClassesData[] {
-  return responseDto.map(({ id, title, content, url, created_at }) => ({
-    classId: id,
-    classTitle: title,
-    classContent: content,
-    classUrl: url,
-    classCreatedAt: created_at,
+  return responseDto.map(item => ({
+    classId: item.id,
+    classTitle: item.title,
+    classContent: item.content,
+    classUrl: item.url,
+    classCreatedAt: item.created_at,
   }));
 }

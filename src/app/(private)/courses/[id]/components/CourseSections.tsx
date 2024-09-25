@@ -9,6 +9,7 @@ import {
   SectionClassItem,
 } from './section-class-items';
 import { getSectionClasses } from '~/services/classes/get-section-classes';
+import { CreateClassButton } from '~/app/section-class/components/message';
 
 interface CourseSectionsProps {
   courseId: number;
@@ -22,16 +23,16 @@ export default async function CourseSections({
   if (failureRes) return <p>Error: {failureRes.detail}</p>;
 
   const sections = successRes.data;
-  // Pass fetched sections as prop to CourseSectionItems (client component)
-  // If seccion is added revalidate the /courses/[id] page
+
   return (
     <CourseSectionItemsContainer>
       {sections.map((section) => (
         <CourseSectionItem key={section.sectionId} section={section}>
           <Suspense
-            fallback={<p>Cargando clasess de {section.sectionName}...</p>}
+            fallback={<p>Cargando clases de {section.sectionName}...</p>}
           >
-            <SectionClasses sectionId={section.sectionId} />{' '}
+            <SectionClasses sectionId={section.sectionId} />
+            <CreateClassButton sectionId={section.sectionId} /> 
           </Suspense>
         </CourseSectionItem>
       ))}
@@ -52,13 +53,17 @@ async function SectionClasses({ sectionId }: SectionClassesProps) {
 
   return (
     <SectionClassItemsContainer>
-      {classes.map((classItem, index) => (
-        <SectionClassItem
-          key={classItem.classId}
-          classItem={classItem}
-          classNumber={index}
-        />
-      ))}
+      {classes.map((classItem, index) => {
+        console.log(classItem); // Registra todo el contenido de classItem en la consola
+
+        return (
+          <SectionClassItem
+            key={classItem.classId}
+            classItem={classItem}
+            classNumber={index + 1}
+          />
+        );
+      })}
     </SectionClassItemsContainer>
   );
 }

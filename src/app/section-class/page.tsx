@@ -1,7 +1,7 @@
 'use client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
-import { CreateClassButton } from './components/create-class';
+import { CreateClassButton } from './components/message';
 
 export default function HomePage() {
   const [queryClient] = useState(() => new QueryClient());

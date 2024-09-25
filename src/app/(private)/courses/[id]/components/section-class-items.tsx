@@ -37,6 +37,7 @@ export function SectionClassItem({
       <AccordionContent className="p-8">
         <div className="flex gap-4">
           <p>Contiene:</p>
+          <h1>{classTitle}</h1>
           <div className="flex gap-2">
             {classUrl ? <span>Video</span> : null}
             {classContent ? <span>Articulo</span> : null}
