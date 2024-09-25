@@ -15,7 +15,7 @@ export async function createCourseAction(
     };
   }
 
-  console.log(JSON.stringify(createResult.successRes, null, 2), "******");
+  console.log(JSON.stringify(createResult.successRes, null, 2), '******');
 
   return {
     success: true,

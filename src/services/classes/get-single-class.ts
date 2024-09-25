@@ -37,7 +37,9 @@ export interface SingleClassData {
 }
 
 // Function to get a single class
-export async function getSingleClass(classId: number): Promise<ApiResponseDto<SingleClassData>> {
+export async function getSingleClass(
+  classId: number
+): Promise<ApiResponseDto<SingleClassData>> {
   const apiResponseDto = await fetchApi<SingleClassResponseDto>({
     isAuth: true,
     path: `/section-class/${classId}`,
@@ -62,7 +64,9 @@ export async function getSingleClass(classId: number): Promise<ApiResponseDto<Si
 }
 
 // Transformation function to map API response to internal format
-function transformResponse(responseDto: SingleClassResponseDto): SingleClassData {
+function transformResponse(
+  responseDto: SingleClassResponseDto
+): SingleClassData {
   const { sectionClass } = responseDto.data;
 
   return {

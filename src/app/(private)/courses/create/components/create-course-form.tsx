@@ -93,7 +93,10 @@ export function CreateCourseForm() {
       if (courseId) {
         router.push(`/courses/${courseId}`);
       } else {
-        console.error('El ID del curso no está disponible en la respuesta:', data);
+        console.error(
+          'El ID del curso no está disponible en la respuesta:',
+          data
+        );
       }
       setSuccessMessage('Curso creado exitosamente!');
       form.reset();

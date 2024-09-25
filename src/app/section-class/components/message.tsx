@@ -55,7 +55,7 @@ export function CreateClassButton({ sectionId }: CreateClassButtonProps) {
       }
       toast.success('Clase creada con éxito');
       setIsFormVisible(false); // Oculta el formulario al crear la clase
-      },
+    },
     onError: (unexpectedError) => {
       const errorMessage =
         unexpectedError?.message || 'Error inesperado al crear la clase';
@@ -67,9 +67,8 @@ export function CreateClassButton({ sectionId }: CreateClassButtonProps) {
   const handleCreateClass = (values: z.infer<typeof createClassSchema>) => {
     // Añadir sectionId a los valores que se envían al servidor
     const classData = { ...values, courseSectionId: Number(sectionId) };
-  console.log('Datos de clase a enviar:', classData); // Para ver qué se envía
-  mutation.mutate(classData);
-
+    console.log('Datos de clase a enviar:', classData); // Para ver qué se envía
+    mutation.mutate(classData);
   };
 
   return (

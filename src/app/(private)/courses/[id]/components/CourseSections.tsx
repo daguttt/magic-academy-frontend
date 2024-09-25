@@ -32,7 +32,7 @@ export default async function CourseSections({
             fallback={<p>Cargando clases de {section.sectionName}...</p>}
           >
             <SectionClasses sectionId={section.sectionId} />
-            <CreateClassButton sectionId={section.sectionId} /> 
+            <CreateClassButton sectionId={section.sectionId} />
           </Suspense>
         </CourseSectionItem>
       ))}

@@ -29,7 +29,6 @@ const createSectionSchema = z.object({
     .max(100, { message: 'El nombre debe tener menos de 100 caracteres.' }),
 });
 
-
 interface CreateSectionButtonProps {
   courseId: number; // Acepta courseId como prop
 }
