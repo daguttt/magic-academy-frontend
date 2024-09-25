@@ -1,4 +1,3 @@
-import React from 'react';
 import { CreateCourseFormContainer } from './components/create-course-form-container';
 
 const CreateCoursePage = () => {
