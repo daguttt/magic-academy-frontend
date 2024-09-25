@@ -28,10 +28,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
   return (
     <div className="relative">
       <div
-        className={clsx(
-          'relative h-64 cursor-pointer bg-cover bg-center',
-          className
-        )}
+        className={clsx('relative h-64 bg-cover bg-center', className)}
         style={{
           backgroundImage: `url('${bannerImage || 'https://picsum.photos/200/300'}')`,
         }}
