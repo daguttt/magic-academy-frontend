@@ -1,3 +1,5 @@
+'use server'
+
 import { z } from 'zod';
 
 import { fetchApi } from '~/lib/fetch-api';

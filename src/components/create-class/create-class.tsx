@@ -1,10 +1,9 @@
-// ~/components/create-class/create-class.tsx
 'use client';
 import { useRouter } from 'next/navigation';
-import { Button } from '../ui/button'; // Asegúrate de que esta ruta sea correcta
+import { Button } from '../ui/button';
 
 interface CreateClassButtonProps {
-  className?: string; // Aceptar className como prop
+  className?: string;
 }
 
 export const CreateClassButton: React.FC<CreateClassButtonProps> = ({
