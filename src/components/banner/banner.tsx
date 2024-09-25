@@ -10,7 +10,6 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
   const [bannerImage, setBannerImage] = useState<string | null>(null);
 
   useEffect(() => {
-    // Cargar la imagen almacenada al montar el componente
     const storedImage = localStorage.getItem('bannerImage');
     if (storedImage) {
       setBannerImage(storedImage);
@@ -22,7 +21,6 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setBannerImage(imageUrl);
-      // Guardar la imagen en localStorage
       localStorage.setItem('bannerImage', imageUrl);
     }
   };
@@ -44,13 +42,13 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
             ¡Bienvenido instructor!
           </h1>
         </div>
-        <label className="absolute bottom-4 right-4 cursor-pointer rounded bg-blue-600 px-4 py-2 text-white">
-          Seleccionar Archivo
+        <label className="bg-black-000 absolute bottom-4 right-4 cursor-pointer rounded px-4 py-2 text-white">
+          Cambiar Banner
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="hidden" // Ocultar el input de archivo
+            className="hidden"
           />
         </label>
       </div>
