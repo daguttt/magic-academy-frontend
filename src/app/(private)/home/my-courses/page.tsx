@@ -1,10 +1,14 @@
-import ProgressClass from '~/components/progress/progress-class';
+import { Suspense } from 'react';
+import ProgressClass from '../_components/progress/progress-class';
+import SkeletonProgress from '../_components/progress/loanding/skeleton-progress';
 
 export default function ProgressPage() {
   return (
-    <div className='p-5 container'>
-      <h1 className="text-2xl font-bold mb-4">Progreso del Curso</h1>
-      <ProgressClass/>
+    <div className="container p-5">
+      <h1 className="mb-4 text-2xl font-bold">Progreso del Curso</h1>
+      <Suspense fallback={<SkeletonProgress />}>
+        <ProgressClass />
+      </Suspense>
     </div>
   );
 }
