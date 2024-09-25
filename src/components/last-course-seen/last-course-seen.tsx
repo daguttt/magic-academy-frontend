@@ -13,6 +13,7 @@ interface LastSeenClass {
   courseId: number;
 }
 
+// TODO: Refactor this to be a server component
 export default function LastCourse() {
   const [lastSeenClasses, setLastSeenClasses] = useState<LastSeenClass[]>([]);
 
