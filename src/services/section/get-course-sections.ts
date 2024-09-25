@@ -13,7 +13,7 @@ const courseSectionsSchema = z.array(
       description: z.string(),
       thumbnail_url: z.string().nullable(),
       slug: z.string(),
-      published_at: z.string(),
+      published_at: z.string().nullable(),
       users: z.array(z.unknown()), // Still have no idea what this attribute brings
     }),
   })
