@@ -6,7 +6,7 @@ interface SidebarProps {
   view: string;
 }
 
-const Sidebar = ({ setView, view }: SidebarProps) => {
+export const Sidebar = ({ setView, view }: SidebarProps) => {
   return (
     <aside className="h-screen w-64 bg-secondary p-4 text-secondary-foreground">
       <ul className="space-y-4">
@@ -34,5 +34,3 @@ const Sidebar = ({ setView, view }: SidebarProps) => {
     </aside>
   );
 };
-
-export default Sidebar;

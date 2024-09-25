@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import { useParams } from 'next/navigation'; // Cambia el import
 import React from 'react';
-import Editor from '~/components/section-class/Editor';
+import Editor from './_components/editor';
 
 const ClassPage = () => {
   // Usa useParams para obtener los parámetros de la URL
-  const { id, classId } = useParams(); 
+  const { id, classId } = useParams();
 
   return (
     <div>
