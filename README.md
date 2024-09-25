@@ -45,3 +45,8 @@ Use the following command to use **pnpm** instead of npm:
 ```bash
 pnpx shadcn@latest add <component-name>
 ```
+
+## Contributing
+We follow the **Conventional Commits** standard to make commit changes.
+
+Learn more about it in the following link: *[CONTRIBUTING.md](./CONTRIBUTING.md)*
