@@ -68,22 +68,18 @@ export function CreateSectionButton({ courseId }: CreateSectionButtonProps) {
   const handleCreateSection = (values: z.infer<typeof createSectionSchema>) => {
     const createSectionDto = {
       name: values.name,
-      course: courseId, // Usar courseId de las props
+      course: courseId,
     };
     mutation.mutate(createSectionDto);
   };
 
   return (
     <div>
-      {/* Botón para mostrar el formulario */}
       <Button onClick={() => setIsFormVisible(true)}>Crear Sección</Button>
 
-      {/* Mostrar formulario si el botón fue presionado */}
       {isFormVisible && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          {/* Contenedor del formulario */}
           <div className="relative w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
-            {/* Botón para cerrar el formulario */}
             <button
               className="absolute right-2 top-2 text-gray-600 hover:text-gray-800"
               onClick={() => setIsFormVisible(false)}
