@@ -8,7 +8,7 @@ const sectionClassesResponseSchema = z.array(
   z.object({
     id: z.number(),
     title: z.string(),
-    content: z.string(),
+    content: z.string().nullable(),
     url: z.string().nullable(), // Permitir que sea nulo si no hay URL
     created_at: z.string(),
   })
@@ -46,7 +46,7 @@ export async function getSectionClasses(
 export interface SectionClassData {
   classId: number;
   classTitle: string;
-  classContent: string;
+  classContent: string | null;
   classUrl: string | null; // Permitir que sea nulo si no hay URL
   classCreatedAt: string;
 }
