@@ -1,6 +1,5 @@
 import { Button } from '~/components/ui/button';
 import LastCourses from '~/components/last-course-seen/last-course-seen';
-import ProgressClass from '~/components/progress/progress-class';
 
 export default function Home() {
   return (
