@@ -1,3 +1,5 @@
+import { useFormState } from 'react-hook-form';
+
 import {
   FormControl,
   FormField,
@@ -10,11 +12,10 @@ import { RegisterFormUseFormReturn } from '../register-form';
 
 export function PersonalInfoStep({
   control,
-  errors,
 }: {
   control: RegisterFormUseFormReturn['control'];
-  errors: RegisterFormUseFormReturn['formState']['errors'];
 }) {
+  const { errors } = useFormState({ control });
   return (
     <div>
       <FormField
