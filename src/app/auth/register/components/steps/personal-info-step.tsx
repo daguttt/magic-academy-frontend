@@ -6,17 +6,14 @@ import {
   FormMessage,
 } from '~/components/ui/form';
 import { Input } from '~/components/ui/input';
-import { Button } from '~/components/ui/button';
 import { RegisterFormUseFormReturn } from '../register-form';
 
 export function PersonalInfoStep({
   control,
   errors,
-  handleNextStep,
 }: {
   control: RegisterFormUseFormReturn['control'];
   errors: RegisterFormUseFormReturn['formState']['errors'];
-  handleNextStep: () => void;
 }) {
   return (
     <div>
@@ -71,10 +68,6 @@ export function PersonalInfoStep({
           </FormItem>
         )}
       />
-
-      <Button type="button" onClick={handleNextStep} className="mt-4">
-        Siguiente
-      </Button>
     </div>
   );
 }

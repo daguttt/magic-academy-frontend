@@ -61,6 +61,7 @@ export function RegisterForm() {
   const [step, setStep] = useState(1);
 
   const returnedPropsUseForm = useForm<z.infer<typeof registerFormSchema>>({
+    mode: 'onBlur',
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       name: '',
@@ -69,8 +70,11 @@ export function RegisterForm() {
       topicIds: [],
     },
   });
-  const { errors } = returnedPropsUseForm.formState;
+  const { errors, dirtyFields } = returnedPropsUseForm.formState;
   const topicIdsState = returnedPropsUseForm.getFieldState('topicIds');
+
+  const isNextButtonDisabled =
+    !dirtyFields.name || !dirtyFields.email || !dirtyFields.password;
 
   const mutation = useMutation({
     mutationFn: (registerDto: RegisterDto) => registerAction(registerDto),
@@ -122,11 +126,20 @@ export function RegisterForm() {
         onSubmit={returnedPropsUseForm.handleSubmit(handleRegister)}
       >
         {step === 1 && (
-          <PersonalInfoStep
-            control={returnedPropsUseForm.control}
-            errors={errors}
-            handleNextStep={handleNextStep}
-          />
+          <>
+            <PersonalInfoStep
+              control={returnedPropsUseForm.control}
+              errors={errors}
+            />
+            <Button
+              type="button"
+              onClick={handleNextStep}
+              className="mt-4"
+              disabled={isNextButtonDisabled}
+            >
+              Siguiente
+            </Button>
+          </>
         )}
         {step === 2 && (
           <>
