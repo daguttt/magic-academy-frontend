@@ -45,6 +45,13 @@ export type RegisterFormUseFormReturn = UseFormReturn<
   z.infer<typeof registerFormSchema>
 >;
 
+const savedFormValues = (() => {
+  const values = globalThis?.sessionStorage?.getItem('registerFormValues');
+  if (!values) return undefined;
+
+  return JSON.parse(values) as z.infer<typeof registerFormSchema>;
+})();
+
 export function RegisterForm() {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
@@ -69,12 +76,10 @@ export function RegisterForm() {
       password: '',
       topicIds: [],
     },
+    values: savedFormValues,
   });
-  const { errors, dirtyFields } = returnedPropsUseForm.formState;
-  const topicIdsState = returnedPropsUseForm.getFieldState('topicIds');
 
-  const isNextButtonDisabled =
-    !dirtyFields.name || !dirtyFields.email || !dirtyFields.password;
+  const topicIdsState = returnedPropsUseForm.getFieldState('topicIds');
 
   const mutation = useMutation({
     mutationFn: (registerDto: RegisterDto) => registerAction(registerDto),
@@ -124,18 +129,20 @@ export function RegisterForm() {
       <form
         className="grid gap-4"
         onSubmit={returnedPropsUseForm.handleSubmit(handleRegister)}
+        onBlur={() => {
+          window.sessionStorage.setItem(
+            'registerFormValues',
+            JSON.stringify(returnedPropsUseForm.getValues())
+          );
+        }}
       >
         {step === 1 && (
           <>
-            <PersonalInfoStep
-              control={returnedPropsUseForm.control}
-              errors={errors}
-            />
+            <PersonalInfoStep control={returnedPropsUseForm.control} />
             <Button
               type="button"
               onClick={handleNextStep}
               className="justify-self-end"
-              disabled={isNextButtonDisabled}
             >
               Siguiente
             </Button>
