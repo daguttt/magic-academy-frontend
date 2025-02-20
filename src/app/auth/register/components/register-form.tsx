@@ -70,6 +70,7 @@ export function RegisterForm() {
     },
   });
   const { errors } = returnedPropsUseForm.formState;
+  const topicIdsState = returnedPropsUseForm.getFieldState('topicIds');
 
   const mutation = useMutation({
     mutationFn: (registerDto: RegisterDto) => registerAction(registerDto),
@@ -136,7 +137,7 @@ export function RegisterForm() {
             <Button
               type="submit"
               className="w-full"
-              disabled={mutation.isPending || errors.topicIds?.length === 0}
+              disabled={!topicIdsState.isTouched || mutation.isPending}
             >
               {mutation.isPending
                 ? 'Registrando usuario...'
