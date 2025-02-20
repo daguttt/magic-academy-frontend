@@ -122,7 +122,7 @@ export function RegisterForm() {
   return (
     <Form {...returnedPropsUseForm}>
       <form
-        className="space-y-4"
+        className="grid gap-4"
         onSubmit={returnedPropsUseForm.handleSubmit(handleRegister)}
       >
         {step === 1 && (
@@ -134,7 +134,7 @@ export function RegisterForm() {
             <Button
               type="button"
               onClick={handleNextStep}
-              className="mt-4"
+              className="justify-self-end"
               disabled={isNextButtonDisabled}
             >
               Siguiente
