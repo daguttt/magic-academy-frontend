@@ -25,7 +25,12 @@ export function PersonalInfoStep({
           <FormItem>
             <FormLabel>Nombre Completo</FormLabel>
             <FormControl>
-              <Input placeholder="Nombre completo" {...field} type="text" />
+              <Input
+                placeholder="Nombre completo"
+                {...field}
+                autoComplete="name"
+                type="text"
+              />
             </FormControl>
             {errors.name && <FormMessage>{errors.name.message}</FormMessage>}
           </FormItem>
@@ -42,6 +47,7 @@ export function PersonalInfoStep({
               <Input
                 placeholder="tu-correo@gmail.com"
                 {...field}
+                autoComplete="email"
                 type="email"
               />
             </FormControl>
@@ -60,6 +66,7 @@ export function PersonalInfoStep({
               <Input
                 placeholder="Tu contraseña..."
                 {...field}
+                autoComplete="current-password"
                 type="password"
               />
             </FormControl>
