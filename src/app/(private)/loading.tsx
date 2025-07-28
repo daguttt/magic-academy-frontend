@@ -1,6 +1,6 @@
 export default function PrivateLoading() {
   return (
-    <main className="container mx-auto grid min-h-[100svh] content-center justify-items-center px-4">
+    <main className="container mx-auto grid min-h-svh content-center justify-items-center px-4">
       <div className="text-center">
         <h1>Cargando cursos...</h1>
         <div className="grid grid-cols-4 gap-4">

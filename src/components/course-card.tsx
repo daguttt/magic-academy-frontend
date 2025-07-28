@@ -44,11 +44,11 @@ export function CourseCard({
         alt={title}
         width={200}
         height={150}
-        className={`h-40 w-full object-cover transition-opacity duration-300 ${hovered ? 'opacity-50' : 'opacity-100'} rounded-lg border-2 border-[hsl(var(--border))]`}
+        className={`h-40 w-full object-cover transition-opacity duration-300 ${hovered ? 'opacity-50' : 'opacity-100'} rounded-lg border-2 border-border`}
       />
 
       <div className="mt-2">
-        <h3 className="text-lg font-semibold text-[hsl(var(--foreground))]">
+        <h3 className="text-lg font-semibold text-foreground">
           {title}
         </h3>
         <p className="text-[hsl(var(--muted-foreground))]">

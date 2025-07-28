@@ -4,6 +4,9 @@
     every time you make changes.
   */
   "editor.formatOnSave": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   // Enable ESlint to validate files.
   "eslint.validate": [
     "javascript",

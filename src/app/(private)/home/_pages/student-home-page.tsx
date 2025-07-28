@@ -5,7 +5,7 @@ export async function StudentHome() {
   if (failureRes) return <p>{failureRes.detail}</p>;
 
   return (
-    <main className="container mx-auto grid min-h-[100svh] content-center justify-items-center px-4">
+    <main className="container mx-auto grid min-h-svh content-center justify-items-center px-4">
       <pre>Últimas clases vistas: {JSON.stringify(successRes.data)}</pre>
       <h1>Bienvenido Estudiante</h1>
     </main>
