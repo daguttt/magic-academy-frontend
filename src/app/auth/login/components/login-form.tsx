@@ -76,6 +76,7 @@ export function LoginForm() {
               <FormControl>
                 <Input
                   placeholder="tu-correo@gmail.com"
+                  autoComplete="email"
                   {...field}
                   type="email"
                   required
@@ -97,6 +98,7 @@ export function LoginForm() {
               <FormControl>
                 <Input
                   placeholder="Tu contraseña..."
+                  autoComplete="current-password"
                   type="password"
                   {...field}
                 />
