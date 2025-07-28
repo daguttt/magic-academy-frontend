@@ -14,7 +14,7 @@ export default async function middleware(req: NextRequest) {
     path.startsWith(protectedRoute)
   );
 
-  const accessToken = cookies().get(SESSION_KEY_NAME)?.value ?? '';
+  const accessToken = (await cookies()).get(SESSION_KEY_NAME)?.value ?? '';
 
   console.log({
     isProtectedRoute,

@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { cookies } from 'next/headers';
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getUser as getUserService } from '~/services/auth/get-user';
 
@@ -10,7 +10,7 @@ import { ROLES } from './types';
 export const SESSION_KEY_NAME = 'session';
 
 export async function createSession(accessToken: string) {
-  cookies().set({
+  (await cookies()).set({
     name: SESSION_KEY_NAME,
     value: accessToken,
     httpOnly: true,
@@ -21,7 +21,7 @@ export async function createSession(accessToken: string) {
 }
 
 export async function deleteSession() {
-  cookies().delete(SESSION_KEY_NAME);
+  (await cookies()).delete(SESSION_KEY_NAME);
 }
 
 interface Session {
@@ -34,7 +34,7 @@ interface Session {
 
 // Verify session for role-based authorization
 export function verifySession() {
-  const accessToken = cookies().get(SESSION_KEY_NAME)?.value;
+  const accessToken = (cookies() as unknown as UnsafeUnwrappedCookies).get(SESSION_KEY_NAME)?.value;
   if (!accessToken) redirect('/auth/login');
 
   const session: Session = extractJwtPayload(accessToken);

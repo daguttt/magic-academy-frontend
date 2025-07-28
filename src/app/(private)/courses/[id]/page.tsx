@@ -9,15 +9,15 @@ import { verifySession } from '~/lib/session';
 import { ROLES } from '~/lib/types';
 
 interface SingleCoursePageProps {
-  params: { id: string };
-  searchParams: unknown;
+  params: Promise<{ id: string }>;
+  searchParams: Promise<unknown>;
 }
 
-export default function SingleCoursePage(props: SingleCoursePageProps) {
+export default async function SingleCoursePage(props: SingleCoursePageProps) {
   const session = verifySession();
   const manageable = session.roleId === ROLES.INSTRUCTOR;
 
-  const courseId = Number(props.params.id);
+  const courseId = Number((await props.params).id);
 
   return (
     <div className="container mx-auto px-4">
